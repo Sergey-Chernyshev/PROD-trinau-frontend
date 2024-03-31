@@ -7,18 +7,22 @@ import { toast } from 'react-toastify';
 import sendRequest from "../../api/sendRequest";
 import validatePassword from "../../utils/ValidateText/validatePassword";
 import validateLogin from "../../utils/ValidateText/validateLogin";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
+    const navigate = useNavigate()
+
+
     const [inputPassword, setInputPassword] = useState("")
     const [inputLogin, setInputLogin] = useState("")
 
     const successOnClose = () => {
+        navigate('/login')
         console.log("regirect")
     }
 
-    const handleSubmitRegister = (e) => {
+    const handleSubmitLogin = (e) => {
         e.preventDefault()
-
         const validPassword = validatePassword(inputPassword)
         const validLogin = validateLogin(inputLogin)
 
@@ -42,7 +46,7 @@ export default function RegisterPage() {
                 password: inputPassword
             }
 
-            sendRequest('POST', 'http://158.160.110.131:8080/api/profile/register/', data)
+            sendRequest('POST', 'https://trinau-backend.nalinor.dev/api/profile/register/', data)
                 .then(response => {
                     console.log(response);
                     if (response.code === 0) {
@@ -74,12 +78,27 @@ export default function RegisterPage() {
 
     }
     return (
-        <>
-            <form onSubmit={handleSubmitRegister}>
-                <input placeholder='Логин' type='login' value={inputLogin} onChange={e => setInputLogin(e.target.value)} />
-                <input placeholder='Пароль' type='password' value={inputPassword} onChange={e => setInputPassword(e.target.value)} />
-                <button type='submit'>Зарегестрироваться</button>
-            </form>
-        </>
+        <div className="d-flex justify-content-center">
+            <div className=" mt-3" style={{ borderRadius: "12px", backgroundColor: "rgb(24, 24, 24)" }}>
+                <form className="p-5" onSubmit={handleSubmitLogin}>
+                    <div className="text-center">
+                        <h1 className="text-light">Регистрация</h1>
+                    </div>
+                    <div className="form-group py-3">
+                        <input type="text" value={inputLogin} onChange={e => setInputLogin(e.target.value)} className="form-control" id="login" placeholder="Логин" />
+                    </div>
+                    <div>
+                        <input type="password" value={inputPassword} onChange={e => setInputPassword(e.target.value)} className="form-control" id="floatingPassword" placeholder="Пароль" />
+                    </div>
+                    <div className="d-flex justify-content-center mt-4">
+                        <button type="submit" className="btn btn-outline-success mb-4">Зарегистрироваться</button>
+                    </div>
+
+                    <div className="text-center mt-3 text-light">
+                        <p>Есть аккаунт? <Link className="link-success" to="/login">Войти</Link></p>
+                    </div>
+                </form>
+            </div>
+        </div>
     )
 }

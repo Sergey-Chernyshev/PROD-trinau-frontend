@@ -15,8 +15,8 @@ import PostsPageDrafts from './pages/PostsPage/PostsPageDrafts';
 import PostsPagePublic from './pages/PostsPage/PostsPagePublic';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
-import LoginPage from './pages/LoginPage/LoginPage';
 import CreationPostPage from './pages/CreationPostPage/CreationPostPage';
+import { ToastContainer } from 'react-toastify';
 
 
 
@@ -72,8 +72,17 @@ const router = createBrowserRouter([
         {
           path: 'createpost',
           element:  <CreationPostPage/>
-        }
+        },
+        
       ]
+  },
+  {
+    path: 'login',
+    element:  <LoginPage/>
+  },
+  {
+    path: 'register',
+    element:  <RegisterPage/>
   }
 ]);
 
@@ -84,6 +93,17 @@ createRoot(document.getElementById('root')).render(
         <App />
       </RouterProvider>
 
+
+      <ToastContainer
+        position="top-right"
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnHover={false}
+        draggable={true}
+        theme="dark"
+      />
     {/* </BrowserRouter> */}
   </React.StrictMode>
   

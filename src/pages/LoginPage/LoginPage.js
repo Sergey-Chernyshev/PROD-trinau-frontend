@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import sendRequest from "../../api/sendRequest";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function LoginPage() {
     const [inputPassword, setInputPassword] = useState("")
     const [inputLogin, setInputLogin] = useState("")
 
+    const navigate = useNavigate()
 
     const successOnClose = () => {
         console.log("regirect")
+        navigate("/profile")
     }
 
     const handleSubmitLogin = (e) => {
@@ -21,11 +23,11 @@ export default function LoginPage() {
             password: inputPassword
         }
 
-        sendRequest('POST', 'http://158.160.110.131:8080/api/profile/login/', data)
+        sendRequest('POST', 'https://trinau-backend.nalinor.dev/api/profile/login/', data)
             .then(response => {
                 console.log(response);
-                localStorage.setItem('accessToken', response.message.token);
                 if (response.code === 0) {
+                    localStorage.setItem('accessToken', response.message.token);
                     toast("Вы вошли!", {
                         autoClose: 1500,
                         type: "success",

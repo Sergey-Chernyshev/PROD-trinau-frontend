@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 
 export default function PostsPageHeader() {
@@ -22,7 +22,7 @@ export default function PostsPageHeader() {
                     <button className="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" tabindex="-1">Черновики</button>
                 </NavLink>
             </li>
-            <a className="mx-2 btn btn-outline-success" href="create.html" role="button">+</a>
+            <Link to="/createpost" className="mx-2 btn btn-outline-success" href="create.html" role="button">+</Link>
         </ul>
     )
 }
