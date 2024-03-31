@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import sendRequest from "../../api/sendRequest";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 
 export default function LoginPage() {
@@ -17,13 +18,13 @@ export default function LoginPage() {
 
         const data = {
             username: inputLogin,
-            password: inputPassword,
-            time: new Date().getTime()
+            password: inputPassword
         }
 
-        sendRequest('POST', 'https://api.example.com/login', data)
+        sendRequest('POST', 'http://158.160.110.131:8080/api/profile/login/', data)
             .then(response => {
                 console.log(response);
+                localStorage.setItem('accessToken', response.message.token);
                 if (response.code === 0) {
                     toast("Вы вошли!", {
                         autoClose: 1500,
@@ -60,17 +61,17 @@ export default function LoginPage() {
                         <h1 className="text-light">Вход</h1>
                     </div>
                     <div className="form-group py-3">
-                        <input type="text" className="form-control" id="login" placeholder="Вход" />
+                        <input type="text" value={inputLogin} onChange={e => setInputLogin(e.target.value)} className="form-control" id="login" placeholder="Логин" />
                     </div>
                     <div>
-                        <input type="password" className="form-control" id="floatingPassword" placeholder="Пароль" />
+                        <input type="password" value={inputPassword} onChange={e => setInputPassword(e.target.value)} className="form-control" id="floatingPassword" placeholder="Пароль" />
                     </div>
                     <div className="d-flex justify-content-center mt-4">
                         <button type="submit" className="btn btn-outline-success mb-4">Войти</button>
                     </div>
 
                     <div className="text-center mt-3 text-light">
-                        <p>Нет записи? <a className="link-success" href="#!">Регистрация</a></p>
+                        <p>Нет записи? <Link className="link-success" to="/register">Регистрация</Link></p>
                     </div>
                 </form>
             </div>
