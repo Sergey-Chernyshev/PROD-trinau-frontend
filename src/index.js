@@ -13,6 +13,7 @@ import Contact from './pages/PostsPage/PostsPagePublic';
 import PostsPagePlanned from './pages/PostsPage/PostsPagePlanned';
 import PostsPageDrafts from './pages/PostsPage/PostsPageDrafts';
 import PostsPagePublic from './pages/PostsPage/PostsPagePublic';
+import LoginPage from './pages/LoginPage/LoginPage';
 
 
 
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
         {
           path: 'statistic',
           element:  <ProfilePage/>
+        },
+        {
+          path: 'login',
+          element:  <LoginPage/>
         }
       ]
   }

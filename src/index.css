@@ -15,7 +15,7 @@ code {
 
 @media (min-width: 576px) {
   .h-sm-100 {
-      height: 100%;
+    height: 100%;
   }
 }
 
@@ -28,11 +28,24 @@ code {
   border-radius: 6px;
 }
 
-.nav>li:active {
-  background-color: black !important;
-}
 
-.li-currentlink{
+
+.li-currentlink {
   background-color: #00402f !important;
   transition: all 0.4s ease-in-out !important;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+  background-color: #00402f !important;
+  color: white !important;
+}
+
+a {
+  text-decoration: none !important;
+
+}
+
+.nav-link {
+  color: black !important;
 }
