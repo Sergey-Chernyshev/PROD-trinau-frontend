@@ -4,6 +4,6 @@ export default function CreationPostPage(){
 
 
     return(
-        
+     <div></div>   
     )
 }

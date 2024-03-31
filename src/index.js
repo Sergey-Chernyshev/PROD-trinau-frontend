@@ -15,6 +15,8 @@ import PostsPageDrafts from './pages/PostsPage/PostsPageDrafts';
 import PostsPagePublic from './pages/PostsPage/PostsPagePublic';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import CreationPostPage from './pages/CreationPostPage/CreationPostPage';
 
 
 
@@ -68,12 +70,8 @@ const router = createBrowserRouter([
           element:  <ProfilePage/>
         },
         {
-          path: 'login',
-          element:  <LoginPage/>
-        },
-        {
-          path: 'register',
-          element:  <RegisterPage/>
+          path: 'createpost',
+          element:  <CreationPostPage/>
         }
       ]
   }
