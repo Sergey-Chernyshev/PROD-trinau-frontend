@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
 import NavBarLink from "./NavBarLink";
 
 export default function Navbar() {
@@ -16,7 +15,6 @@ export default function Navbar() {
 
     window.addEventListener("resize", handleResize);
 
-    // Clean up the event listener
     return () => {
       window.removeEventListener("resize", handleResize);
     };

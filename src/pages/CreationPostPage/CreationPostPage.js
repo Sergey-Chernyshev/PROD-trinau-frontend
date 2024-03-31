@@ -1,10 +1,21 @@
 import React from "react";
-
 import { useState } from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from 'react-quill';
+import quillEmoji from 'quill-emoji';
 import "react-quill/dist/quill.snow.css";
+import "quill-emoji/dist/quill-emoji.css"; // Добавьте этот импорт
 import Select from 'react-select';
 import { colourOptions } from '../../data/dataSelect.ts';
+// import Quill from "quill";
+
+const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
+
+Quill.register({
+    'formats/emoji': EmojiBlot,
+    'modules/emoji-shortname': ShortNameEmoji,
+    'modules/emoji-toolbar': ToolbarEmoji,
+    'modules/emoji-textarea': TextAreaEmoji
+}, true);
 
 const modules = {
     toolbar: [
@@ -12,8 +23,12 @@ const modules = {
       [{ script: "sub" }, { script: "super" }],
       ["blockquote", "code-block"],
       ["link", "image", "video"],
+      ['emoji'],
       ["clean"],
     ],
+    'emoji-toolbar': true,
+    "emoji-textarea": true,
+    "emoji-shortname": true,
   };
 
 export default function CreationPostPage(){
