@@ -6,7 +6,7 @@ const sendRequest = async (method, url, data = null, headers = {}) => {
         const response = await axios({
             method: method,
             url: url,
-            data: JSON.stringify(data),
+            data: data,
             headers: headers
         })
         return {code: 0, message: response.data}; 
