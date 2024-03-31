@@ -39,11 +39,10 @@ export default function RegisterPage() {
         else {
             const data = {
                 username: inputLogin,
-                password: inputPassword,
-                time: new Date().getTime()
+                password: inputPassword
             }
 
-            sendRequest('POST', 'https://api.example.com/register', data)
+            sendRequest('POST', 'http://158.160.110.131:8080/api/profile/register/', data)
                 .then(response => {
                     console.log(response);
                     if (response.code === 0) {
