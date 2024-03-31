@@ -7,20 +7,20 @@ export default function Navbar() {
     <div className="col p-3 bg-black" id="navbar">
       <ul className="nav nav-pills flex-sm-column justify-content-center mb-auto">
         <NavBarLink
-          linkTo = "/posts"
-          text = " Посты"
-          icon = "bi-house"
-         />
+          linkTo="/posts/public"
+          text=" Посты"
+          icon="bi-house"
+        />
         <NavBarLink
-          linkTo = "/calendar"
-          text = " Календарь"
-          icon = "bi-calendar3"
-         />
+          linkTo="/calendar"
+          text=" Календарь"
+          icon="bi-calendar3"
+        />
         <NavBarLink
-          linkTo = "/statistic"
-          text = " Статистика"
-          icon = "bi-sliders"
-         />
+          linkTo="/statistic"
+          text=" Статистика"
+          icon="bi-sliders"
+        />
       </ul>
     </div>
   );

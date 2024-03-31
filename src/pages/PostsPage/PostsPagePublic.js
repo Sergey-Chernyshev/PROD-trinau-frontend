@@ -10,6 +10,7 @@ export default function PostsPagePublic() {
             aria-labelledby="pills-home-tab">
             <ul class="list-group">
                 <PostBlock />
+                <PostBlock />
             </ul>
         </div>
     )

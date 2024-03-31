@@ -2,7 +2,7 @@ import React from "react";
 
 
 export default function PostBlock(props) {
-    const {data} = props;
+    const { data } = props;
 
     return (
         <li class="list-group-item">
