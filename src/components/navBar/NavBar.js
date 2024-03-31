@@ -21,6 +21,12 @@ export default function Navbar() {
           text=" Статистика"
           icon="bi-sliders"
         />
+        <NavBarLink
+          linkTo="/profile"
+          text=" Профиль"
+          icon="bi-person-circle"
+        />
+
       </ul>
     </div>
   );

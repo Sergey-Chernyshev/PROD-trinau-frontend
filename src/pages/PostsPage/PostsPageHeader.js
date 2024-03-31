@@ -6,7 +6,7 @@ export default function PostsPageHeader() {
 
     return (
 
-        <ul className="nav nav-pills nav-fill mb-3 ml-3" id="pills-tab" role="tablist">
+        <ul className="nav nav-pills nav-fill mb-3 ml-3 mt-2" id="pills-tab" role="tablist">
             <li className="nav-item" role="presentation">
                 <NavLink to="/posts/public">
                     <button className="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Опубликованные</button>
