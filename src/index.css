@@ -21,7 +21,7 @@ code {
 
 
 #content {
-  background-color: #ffffff;
+  background-color: gray;
 }
 
 .nav-item {
@@ -39,6 +39,10 @@ code {
 .nav-pills .show>.nav-link {
   background-color: #00402f !important;
   color: white !important;
+}
+
+.nav {
+  --bs-nav-link-hover-color: black !important;
 }
 
 a {
