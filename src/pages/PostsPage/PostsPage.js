@@ -7,7 +7,9 @@ export default function PostsPage() {
 
     return (
         <>
+        <div className=''>
             <PostsPageHeader />
+        </div>
             <div className="tab-content" id="pills-tabContent">
                 <Outlet />
             </div>

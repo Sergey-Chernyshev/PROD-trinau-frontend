@@ -3,10 +3,10 @@ import { NavLink } from "react-router-dom";
 
 export default function NavBarLink(props) {
   const { linkTo, text, icon } = props;
-
+  
 
   return (
-    <li className="nav-item py-2 px-auto">
+    <li className="nav-item">
       <NavLink
         to={linkTo}
         className={({ isActive }) => {
@@ -16,7 +16,7 @@ export default function NavBarLink(props) {
         }}
       >
         <i className={"bi icons " + icon}></i>
-        <span className="ms-1 d-none d-sm-inline">{text}</span>
+        <p className="ms-1 d-none d-sm-inline">{text}</p>
       </NavLink>
     </li>
   )

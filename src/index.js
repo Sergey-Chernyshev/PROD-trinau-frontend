@@ -6,10 +6,9 @@ import App from './App';
 import 'react-toastify/dist/ReactToastify.css';
 
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {  Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import PostsPage from './pages/PostsPage/PostsPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
-import Contact from './pages/PostsPage/PostsPagePublic';
 import PostsPagePlanned from './pages/PostsPage/PostsPagePlanned';
 import PostsPageDrafts from './pages/PostsPage/PostsPageDrafts';
 import PostsPagePublic from './pages/PostsPage/PostsPagePublic';
@@ -20,6 +19,8 @@ import { ToastContainer } from 'react-toastify';
 import Page404 from './pages/Page404/Page404';
 import StatisticPage from './pages/StatisticPage/StatisticPage';
 import CalendarPage from './pages/CalendarPage/CalendarPage';
+import CreationProjectPage from './pages/CerationProjectPage/CreationProjectPage';
+import LoginTelegrammPage from './pages/LoginTelegrammPage/LoginTelegrammPage';
 
 
 
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
           path: 'createpost',
           element:  <CreationPostPage/>
         },
+        {
+          path: 'creationproject',
+          element:  <CreationProjectPage/>
+        },
         
       ]
   },
@@ -90,6 +95,10 @@ const router = createBrowserRouter([
   {
     path: 'register',
     element:  <RegisterPage/>
+  },
+  {
+    path: 'logintelegramm',
+    element:  <LoginTelegrammPage/>
   },
   {
     path: '*',

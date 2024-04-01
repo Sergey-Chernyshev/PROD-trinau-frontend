@@ -11,8 +11,8 @@ import { Outlet} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="container-fluid">
-      <div className='row'>
+    <div className="container-fluid overflow-hidden">
+      <div className='row vh-100 overflow-auto'>
 
         <Navbar />
         <div className='col-sm-9 p-3 min-vh-100' id='content'>

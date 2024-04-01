@@ -28,7 +28,7 @@ export default function PostsPageHeader() {
                     )}
                 </NavLink>
             </li>
-            <Link to="/createpost" className="mx-2 btn btn-outline-success" href="create.html" role="button">+</Link>
+            <Link to="/creationproject" className="mx-2 btn btn-outline-success" href="create.html" role="button">Добавить проект</Link>
         </ul>
     )
 }
