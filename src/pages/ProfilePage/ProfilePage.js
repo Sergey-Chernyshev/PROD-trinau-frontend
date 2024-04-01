@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function ProfilePage(){
     const [showNatification, setShowNatification] = useState()
-    const [responseData, setResponseData] = useState("Загрузка...")
+    const [responseData, setResponseData] = useState(
+        {username: "Загрузка..."}
+    )
     const navigate = useNavigate()
 
     const loginToken = localStorage.getItem("accessToken")

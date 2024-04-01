@@ -17,6 +17,9 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import CreationPostPage from './pages/CreationPostPage/CreationPostPage';
 import { ToastContainer } from 'react-toastify';
+import Page404 from './pages/Page404/Page404';
+import StatisticPage from './pages/StatisticPage/StatisticPage';
+import CalendarPage from './pages/CalendarPage/CalendarPage';
 
 
 
@@ -67,11 +70,11 @@ const router = createBrowserRouter([
         },
         {
           path: 'calendar',
-          element:  <ProfilePage/>
+          element:  <CalendarPage/>
         },
         {
           path: 'statistic',
-          element:  <ProfilePage/>
+          element:  <StatisticPage/>
         },
         {
           path: 'createpost',
@@ -87,7 +90,11 @@ const router = createBrowserRouter([
   {
     path: 'register',
     element:  <RegisterPage/>
-  }
+  },
+  {
+    path: '*',
+    element:  <Page404 />
+  },
 ]);
 
 createRoot(document.getElementById('root')).render(
