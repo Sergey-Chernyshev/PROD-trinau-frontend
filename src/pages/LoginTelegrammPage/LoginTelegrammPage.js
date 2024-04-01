@@ -30,8 +30,7 @@ export default function LoginTelegrammPage() {
         e.preventDefault()
         if (loginStage === 1) {
             const data = {
-                phone: inputPhone,
-                test_mode: 1
+                phone: inputPhone
             }
             const header = "Authorization: Bearer " + loginToken
             sendRequest('POST', 'https://trinau-backend.nalinor.dev/api/bindings/add/send_code/', data, header)
