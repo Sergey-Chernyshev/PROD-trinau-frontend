@@ -10,7 +10,7 @@ export default function PostBlock(props) {
                 <h3>Название</h3>
                 <div className="dropdown">
                     <button className="btn btn-sm" type="button" id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-list"></i>
+                        data-bs-toggle="dropdown" aria-expanded="false"><i className="bi bi-list"></i>
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a className="dropdown-item" href="#">Предпросмотр</a></li>

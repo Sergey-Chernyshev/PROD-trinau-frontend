@@ -21,7 +21,7 @@ import StatisticPage from './pages/StatisticPage/StatisticPage';
 import CalendarPage from './pages/CalendarPage/CalendarPage';
 import CreationProjectPage from './pages/CerationProjectPage/CreationProjectPage';
 import LoginTelegrammPage from './pages/LoginTelegrammPage/LoginTelegrammPage';
-
+import PostsPageAll from './pages/PostsPage/PostsPageAll';
 
 
 
@@ -66,7 +66,12 @@ const router = createBrowserRouter([
             {
               path: '/posts/drafts',
               element:  <PostsPageDrafts/>,
-            }
+            },
+            {
+              path: '/posts/all',
+              element:  <PostsPageAll/>
+            },
+
           ]
         },
         {
