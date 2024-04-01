@@ -21,7 +21,7 @@ code {
 
 
 #content {
-  background-color: gray;
+  background-color: #f0f0f0;
 }
 
 .nav-item {
@@ -63,7 +63,7 @@ a {
 
 
 
-.ql-editor p img{
+.ql-editor p img {
   position: relative;
-  width: 50%;
+  width: 10%;
 }
