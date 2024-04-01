@@ -6,8 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginTelegrammPage() {
     const [inputPassword, setInputPassword] = useState("")
-    const [inputPhone, setInputPhone] = useState("+79162810384")
-    const [inputCode, setInputCode] = useState("")
+    const [inputPhone, setInputPhone] = useState("9996627915")
+    const [inputCode, setInputCode] = useState("22222")
     const [authCode, setAuthCode] = useState(null)
     const [loginStage, setLoginStage] = useState(1)
     const navigate = useNavigate()
@@ -30,7 +30,8 @@ export default function LoginTelegrammPage() {
         e.preventDefault()
         if (loginStage === 1) {
             const data = {
-                phone: inputPhone
+                phone: inputPhone,
+                test_mode: 1
             }
             const header = "Authorization: Bearer " + loginToken
             sendRequest('POST', 'https://trinau-backend.nalinor.dev/api/bindings/add/send_code/', data, header)

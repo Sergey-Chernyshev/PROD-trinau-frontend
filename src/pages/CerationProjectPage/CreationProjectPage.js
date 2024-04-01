@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import Select from 'react-select';
+import sendRequest from "../../api/sendRequest";
+import { toast } from "react-toastify";
 
 
 
 export default function CreationProjectPage() {
-  const data_channels = [
+  let data_channels = [
     {
       value: 1,
       text: 'Мы в центре',
@@ -36,25 +38,60 @@ export default function CreationProjectPage() {
       </svg>
     }
   ];
-  const data_users = [{
-    value: 1,
-    text: 'Юлия Гуляйкина',
-    icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
-      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-    </svg>
-  },
-  {
-    value: 2,
-    text: 'Илья Кучеренко',
-    icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
-      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-    </svg>
-  }]
+  let data_users = []
 
   const [inputTitleProject, setInputTitleProject] = useState(null)
   const [selectedChannelOption, setSelectedChannelOption] = useState(null);
   const [selectedUserOption, setSelectedUserOption] = useState(null);
 
+  const [allUsersForSelect, setAllUsersForSelect] = useState([])
+
+  const loginToken = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    const header = "Authorization: Bearer " + loginToken
+    sendRequest('GET', 'https://trinau-backend.nalinor.dev/api/users/', null, header)
+      .then(response => {
+        if (response.code === 0) {
+          setAllUsersForSelect(response.message)
+          toast("Получены имена", {
+            autoClose: 500,
+            type: "action",
+            theme: "dark",
+          });
+        }
+        else {
+          toast(response.message.message, {
+            autoClose: 4000,
+            type: "error",
+            theme: "dark"
+          })
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        toast("Произошла ошибка при получении данных", {
+          autoClose: 2500,
+          type: "error",
+          theme: "dark"
+        });
+      });
+
+  }, []);
+
+  useEffect(() => {
+    console.log(allUsersForSelect)
+    allUsersForSelect.forEach(user => {
+      data_users.push({
+        value: user.id,
+        text: user.username,
+        icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
+                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+              </svg>
+      })
+    });
+  }, [allUsersForSelect]);
+  
   const handleChangeSelectChannels = e => {
     setSelectedChannelOption(e);
   }
@@ -68,19 +105,50 @@ export default function CreationProjectPage() {
     return option.data.text.toLowerCase().includes(inputValue.toLowerCase());
   }
 
-  const handleSubmitProjectForm = () =>{
-
-    const data = {
-      
+  const handleSubmitProjectForm = (e) => {
+    e.preventDefault()
+    const dataTitle = {
+      name: inputTitleProject
     }
+
+    const header = "Authorization: Bearer " + loginToken
+    sendRequest('POST', 'https://trinau-backend.nalinor.dev/api/projects/', dataTitle, header)
+      .then(response => {
+        console.log(response)
+        if (response.code === 0) {
+          toast("Имя проекта добавлено", {
+            autoClose: 1500,
+            type: "action",
+            theme: "dark",
+          });
+
+        }
+        else {
+          toast(response.message.message, {
+            autoClose: 4000,
+            type: "error",
+            theme: "dark"
+          })
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        toast("Произошла ошибка при получении данных", {
+          autoClose: 2500,
+          type: "error",
+          theme: "dark"
+        });
+      });
+
+
 
   }
 
   return (<div className=" min-vh-100 d-flex justify-content-center align-items-cente" id="content">
-    <form onSubmit={handleSubmitProjectForm}>
+    <form >
       <h1 className="text-center">Новый проект</h1>
       <div className="form-group p-2">
-        <input value={inputTitleProject} onChange={(e) => {handleChangeInputTitleProject(e)}} type="text" className="form-control" id="name" placeholder="Название проекта" />
+        <input value={inputTitleProject} onChange={(e) => { handleChangeInputTitleProject(e) }} type="text" className="form-control" id="name" placeholder="Название проекта" />
       </div>
       <div className="form-group p-2">
         <Select
@@ -101,7 +169,7 @@ export default function CreationProjectPage() {
         <p className="p-2">Не нашли нужный канал? <a className="link-success">Добавить</a></p>
       </div>
       <div className="p-2">
-      <Select
+        <Select
           isMulti
           placeholder="Выберите или введите участников"
           isClearable={true}
@@ -119,7 +187,7 @@ export default function CreationProjectPage() {
       </div>
 
       <div className="form-group p-2 d-flex justify-content-center">
-        <button type="submit" className="btn btn-outline-success">Создать</button>
+        <button onClick={handleSubmitProjectForm} className="btn btn-outline-success">Создать</button>
       </div>
     </form>
   </div>
