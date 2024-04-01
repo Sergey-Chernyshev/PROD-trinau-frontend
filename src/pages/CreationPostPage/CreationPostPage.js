@@ -54,7 +54,7 @@ export default function CreationPostPage(){
             />
             <p className="p-2">Не нашли нужный канал? <a className="link-success">Добавить</a></p>
           </div>
-          <div class="p-2">
+          <div className="p-2">
             <Select
               defaultValue={[colourOptions[2], colourOptions[3]]}
               isMulti

@@ -23,7 +23,7 @@ export default function Navbar() {
   return (
     <div className="col p-3 bg-black" id="navbar">
       <ul className="nav nav-pills flex-sm-column justify-content-center mb-auto">
-        <NavBarLink linkTo="/posts/public" text=" Посты" icon="bi-house" />
+        <NavBarLink linkTo="/posts" text=" Посты" icon="bi-house" />
         <NavBarLink linkTo="/calendar" text=" Календарь" icon="bi-calendar3" />
         <NavBarLink linkTo="/statistic" text=" Статистика" icon="bi-sliders" />
         <NavBarLink linkTo="/profile" text=" Профиль" icon="bi-person-circle" />

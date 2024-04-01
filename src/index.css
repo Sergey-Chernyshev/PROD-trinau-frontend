@@ -60,3 +60,12 @@ a {
   border-bottom-right-radius: 0.5em;
   background: #fefcfc;
 }
+
+.ql-editor p{
+  text-align: center;
+}
+
+.ql-editor p img{
+  position: relative;
+  width: 50%;
+}

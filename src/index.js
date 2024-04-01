@@ -6,7 +6,7 @@ import App from './App';
 import 'react-toastify/dist/ReactToastify.css';
 
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom';
 import PostsPage from './pages/PostsPage/PostsPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import Contact from './pages/PostsPage/PostsPagePublic';
@@ -47,6 +47,10 @@ const router = createBrowserRouter([
           path: 'posts',
           element:  <PostsPage/>,
           children: [
+            {         
+              index: true,
+              element: <Navigate to="/posts/public" replace />,
+            },
             {
               path: '/posts/public',
               element:  <PostsPagePublic/>,

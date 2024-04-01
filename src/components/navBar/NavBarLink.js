@@ -7,7 +7,8 @@ export default function NavBarLink(props){
 
     return(
         <li className="nav-item py-2">
-          <NavLink to={linkTo}
+          <NavLink 
+            to={linkTo}
             className={({ isActive }) => {
               return isActive
                 ? 'nav-link link-light li-currentlink'
