@@ -52,7 +52,7 @@ const handleProjectDelete = (e) => {
 
 export default function ProjectBlock(props) {
     const {data} = props
-    projectRefs[data.id] = useRef();
+    //projectRefs[data.id] = useRef();
     let dataPosts = data
       // Проверяем, определен ли allData
       if (!dataPosts || !dataPosts.posts) {
@@ -68,7 +68,8 @@ export default function ProjectBlock(props) {
     return (
         <li className="list-group-item mt-3 mb-4 project text-light c-project-card"
             style={{ borderRadius: '12px' }} id={"project_"+data.id}
-            ref={projectRefs[data.id]}>
+            //ref={projectRefs[data.id]}
+        >
             <div className='d-flex justify-content-between align-items-center'>
                 <h1>{data.name}</h1>
                 <div className="d-flex">
