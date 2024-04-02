@@ -38,7 +38,7 @@ width:  100% !important;`)
 
   return (
     <div className="col p-3 bg-black" id="navbar">
-      <ul className="nav nav-pills flex-sm-column justify-content-center mb-auto">
+      <ul className="nav nav-pills flex-sm-column justify-content-between ps-sm-0 mb-auto">
         <NavBarLink linkTo="/posts" text=" Проекты" icon="bi-house" />
         <NavBarLink linkTo="/calendar" text=" Календарь" icon="bi-calendar3" />
         <NavBarLink linkTo="/statistic" text=" Статистика" icon="bi-sliders" />

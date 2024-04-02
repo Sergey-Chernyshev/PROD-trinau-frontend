@@ -1,60 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CartesianGrid, Legend, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Line } from "recharts";
 import sendRequest from "../../api/sendRequest";
 
 
-const data = [
-    {
-        name: 'Page A',
-        uv: 4000,
-        pv: 2400,
-        amt: 2400,
-    },
-    {
-        name: 'Page B',
-        uv: 3000,
-        pv: 1398,
-        amt: 2210,
-    },
-    {
-        name: 'Page C',
-        uv: 2000,
-        pv: 9800,
-        amt: 2290,
-    },
-    {
-        name: 'Page D',
-        uv: 2780,
-        pv: 3908,
-        amt: 2000,
-    },
-    {
-        name: 'Page E',
-        uv: 1890,
-        pv: 4800,
-        amt: 2181,
-    },
-    {
-        name: 'Page F',
-        uv: 2390,
-        pv: 3800,
-        amt: 2500,
-    },
-    {
-        name: 'Page G',
-        uv: 3490,
-        pv: 4300,
-        amt: 2100,
-    },
-];
+
 
 export default function StatisticPage() {
 
     const { idpost, idproject } = useParams();
 
-    console.log(idpost, idproject)
+    const [staticData, setStaticData] = useState([])
+
+    const [dataViews, setDataViews] = useState([])
+    const [dataReactions, setDataReactions] = useState([])
+
+    const [channelTitle, setChannelTitle] = useState("Загрузка данных...")
 
     useEffect(() => {
     const loginToken = localStorage.getItem("accessToken");
@@ -62,7 +24,9 @@ export default function StatisticPage() {
       sendRequest('GET', `https://trinau-backend.nalinor.dev/api/projects/${idproject}/posts/${idpost}/stats/1/`, null, header)
         .then(response => {
           if (response.code === 0) {
-            console.log("r", response)
+            setChannelTitle(response.message[0].channel.name)
+            console.log("r", response.message)
+            setStaticData(response.message)
             toast("Получение статистики", {
               autoClose: 500,
               type: "action",
@@ -87,17 +51,44 @@ export default function StatisticPage() {
         });
     }, []);
 
+    function formatTime(datetimeString) {
+      const datetime = new Date(datetimeString);
+      const hours = datetime.getHours();
+      const minutes = datetime.getMinutes();
+      const formattedTime = `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
+      return formattedTime;
+    }
+
+    useEffect(() => {
+      setDataViews(prevDataViews => {
+        const formattedData = staticData?.map(data => ({
+          time: formatTime(data.created_at),
+          views: data.views
+        }));
+        return [...formattedData];
+      });
+
+      setDataReactions(prevDataViews => {
+        const formattedData = staticData?.map(data => ({
+          time: formatTime(data.created_at),
+          reactions: data.reactions
+        }));
+        return [...formattedData];
+      });
+
+    }, [staticData]); 
+    
 
 
 
     return (
         <>
-            <div>Стастистика для поста с id: {idpost}</div>
-            <ResponsiveContainer width={500} height={500}>
+            <div>Стастистика для поста: {channelTitle}</div>
+            <ResponsiveContainer width="100%" height={500}>
                 <LineChart
                     width={500}
                     height={300}
-                    data={data}
+                    data={dataViews}
                     margin={{
                         top: 5,
                         right: 30,
@@ -106,11 +97,31 @@ export default function StatisticPage() {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey="time" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="views" stroke="#8884d8" />
+                </LineChart>
+            </ResponsiveContainer>
+            <ResponsiveContainer width="100%" height={500}>
+                <LineChart
+                    width={500}
+                    height={300}
+                    data={dataReactions}
+                    margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                    }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="time" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="reactions" stroke="#8884d8" />
                 </LineChart>
             </ResponsiveContainer>
         </>

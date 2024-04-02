@@ -5,9 +5,8 @@ import getFirst100Chars from '../../utils/Posts/textFormater'
 import { toast } from "react-toastify";
 import sendRequest from "../../api/sendRequest";
 export default function PostBlock(props) {
-    const { data, statusText, projectId } = props;
-    console.log("projectId", projectId)
-
+    const { data, statusText, projectid } = props;
+    
     const loginToken = localStorage.getItem("accessToken");
 
     const handlePostDelete = (e) => {
@@ -15,8 +14,8 @@ export default function PostBlock(props) {
 
 
 
-        let proj_id = e.target.getAttribute("projectId");
-        let post_id = e.target.getAttribute("postId");
+        let proj_id = e.target.getAttribute("projectid");
+        let post_id = e.target.getAttribute("postid");
         // eslint-disable-next-line no-restricted-globals
         let ans = confirm("Точно удалить этот пост?")
         if (ans === null || ans === false)
@@ -57,8 +56,8 @@ export default function PostBlock(props) {
 
     const handlePostPreview = (e) => {
         e.preventDefault()
-        let proj_id = e.target.getAttribute("projectId");
-        let post_id = e.target.getAttribute("postId");
+        let proj_id = e.target.getAttribute("projectid");
+        let post_id = e.target.getAttribute("postid");
         console.log(proj_id, post_id)
         toast("Начата генерация превью", {
             autoClose: 2500,
@@ -98,7 +97,7 @@ export default function PostBlock(props) {
     return (
         <li className="list-group-item mt-3 mb-3" style={{ borderRadius: '12px' }}>
             <div className="d-flex justify-content-between">
-                <Link to={`/statistic/${data.id}/${projectId}`}><h4> <i class="bi-graph-up me-2"></i>{data.name}</h4></Link>
+                <Link to={`/statistic/${data.id}/${projectid}`}><h4> <i className="bi-graph-up me-2"></i>{data.name}</h4></Link>
                 <div className="dropdown">
                     <button className="btn btn-sm" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-expanded="false"><i className="bi bi-list"></i>
@@ -108,12 +107,12 @@ export default function PostBlock(props) {
                         <li>
                             <Link
                                 className="dropdown-item" onClick={handlePostPreview}
-                                projectId={projectId} postId={data.id}
+                                projectid={projectid} postid={data.id}
                             >
                                 Предпросмотр
                             </Link>
                         </li>
-                        <div class="dropdown-divider"></div>
+                        <div className="dropdown-divider"></div>
                         <li>
                             <Link className="dropdown-item" >
                                 Изменить
@@ -122,8 +121,8 @@ export default function PostBlock(props) {
                         <li>
                             <Link 
                                 className="dropdown-item" 
-                                projectId={projectId} 
-                                postId={data.id}
+                                projectid={projectid} 
+                                postid={data.id}
                                 onClick={handlePostDelete}
                             >
                                 Удалить

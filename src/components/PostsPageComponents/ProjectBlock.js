@@ -18,7 +18,7 @@ export default function ProjectBlock(props) {
 
     const handleProjectDelete = (e) => {
         e.preventDefault()
-        let p_id = e.target.getAttribute("projectId");
+        let p_id = e.target.getAttribute("projectid");
         // eslint-disable-next-line no-restricted-globals
         let ans = confirm("Точно удалить этот проект?")
         if (ans === null || ans === false)
@@ -59,20 +59,19 @@ export default function ProjectBlock(props) {
         <li className="list-group-item mt-3 mb-4 project text-light" style={{ borderRadius: '12px' }}>
             <div className='d-flex justify-content-between align-items-center'>
                 <h1>{data.name}</h1>
-                <>
-            <div className="btn-group" role="group">
-                <div className="dropdown">
-                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      
-    </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">                        
-                        <li><a className="dropdown-item">Изменить</a></li>
-                        <li><a onClick={handleProjectDelete} projectId={data.id} className="dropdown-item" href="/">Удалить</a></li>
+                <div className="d-flex align-items-center">
+                    <div className="dropdown">
+                        <button className="btn btn-warning noborder-right c-post-actions" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            ><i className="bi bi-list"></i>
+                        </button>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><Link className="dropdown-item">Изменить</Link></li>
+                            <li><Link onClick={handleProjectDelete} projectid={data.id} className="dropdown-item">Удалить</Link></li>
+                        </ul>
                     </div>
+                    <Link to="/createpost" className="me-2 btn btn-warning c-create-post noborder-left" role="button">Добавить пост</Link>
                 </div>
-                <Link to="/createpost" className="mx-2 btn btn-warning c-create-post" role="button">Добавить пост</Link>
-                            </div>
-                </>
             </div>
             <ul className="list-group">
                 {
@@ -80,7 +79,7 @@ export default function ProjectBlock(props) {
                         dataPosts.posts
                             .filter(e => e.is_sent)
                             .map((e, i) => (
-                                <PostBlock key={i} data={e} statusText={'Было опубликовано'} projectId={data.id}/>
+                                <PostBlock key={i} data={e} statusText={'Было опубликовано'} projectid={data.id} />
                             ))
                     )
                 }
@@ -89,7 +88,7 @@ export default function ProjectBlock(props) {
                         dataPosts.posts
                             .filter(e => !e.is_sent && e.schedule_time !== null)
                             .map((e, i) => (
-                                <PostBlock key={i} data={e} statusText={'Будет опубликовано в'} projectId={data.id} />
+                                <PostBlock key={i} data={e} statusText={'Будет опубликовано в'} projectid={data.id} />
                             ))
                     )
                 }
@@ -98,14 +97,14 @@ export default function ProjectBlock(props) {
                         dataPosts.posts
                             .filter(e => e.schedule_time === null)
                             .map((e, i) => (
-                                <PostBlock key={i} data={e} statusText={'Время публикации не добавлено'} projectId={data.id}/>
+                                <PostBlock key={i} data={e} statusText={'Время публикации не добавлено'} projectid={data.id} />
                             ))
                     )
                 }
                 {
                     type === "all" && (
                         dataPosts.posts.map((e, i) => (
-                            <PostBlock key={i} data={e}  statusText={'Было опубликовано в'} projectId={data.id} />
+                            <PostBlock key={i} data={e} statusText={'Было опубликовано в'} projectid={data.id} />
                         ))
                     )
                 }

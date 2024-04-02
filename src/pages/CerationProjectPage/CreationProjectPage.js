@@ -4,10 +4,14 @@ import "react-quill/dist/quill.snow.css";
 import Select from 'react-select';
 import sendRequest from "../../api/sendRequest";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 export default function CreationProjectPage() {
+
+  const { idpost, idproject } = useParams();
+  console.log(idpost, idproject);
+
   const style = {
     control: (base, state) => ({
       ...base,
@@ -17,7 +21,6 @@ export default function CreationProjectPage() {
   };
 
   const navigate = useNavigate();
-
   const [data_channels, setdata_channels] = useState([])
   const [data_users, setdata_users] = useState([])
 
@@ -219,7 +222,7 @@ export default function CreationProjectPage() {
     }
   }, [respIdProject]);
   
-  return (<div className=" min-vh-100 d-flex justify-content-center align-items-cente" id="content">
+  return (<div className=" min-vh-100 d-flex justify-content-center" id="content">
     <form >
       <h1 className="text-center">Новый проект</h1>
       <div className="form-group p-2">

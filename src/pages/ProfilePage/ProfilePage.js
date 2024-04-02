@@ -138,12 +138,12 @@ export default function ProfilePage() {
                         <ul className="list-group">
                             {
                                  accounts.map((e, i) => (
-                                <li className="list-group-item d-flex justify-content-between align-items-center" id={i}>
+                                <li className="list-group-item d-flex justify-content-between align-items-center" key={i}>
                                     <div>
-                                    <i class="bi bi-telegram me-2"></i>
+                                    <i className="bi bi-telegram me-2"></i>
                                     {e.name}
                                     </div>
-                                    <i class="bi bi-x-circle danger" ></i>
+                                    <i className="bi bi-x-circle danger" ></i>
                                     </li>    
                                     ))
                             }

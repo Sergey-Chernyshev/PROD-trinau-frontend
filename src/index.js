@@ -97,6 +97,10 @@ const router = createBrowserRouter([
           path: 'creationproject',
           element:  <CreationProjectPage/>
         },
+        {
+          path: 'creationproject/:idpost/:idproject',
+          element:  <CreationProjectPage/>
+        },
         
       ]
   },

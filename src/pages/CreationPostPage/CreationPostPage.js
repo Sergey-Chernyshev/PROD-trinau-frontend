@@ -221,7 +221,7 @@ export default function CreationPostPage() {
           });
         }
         else {
-          console.log(response)
+          // console.log(response)
           toast(response.message.message, {
             autoClose: 4000,
             type: "error",
@@ -275,6 +275,44 @@ export default function CreationPostPage() {
         });
       });
   }
+
+  const handleOnclickRefactor = (e) => {
+    e.preventDefault();
+    const data = {
+      text: description
+    }
+    console.log(data)
+    const loginToken = localStorage.getItem("accessToken");
+    const header = "Authorization: Bearer " + loginToken;
+    sendRequest('POST', 'https://trinau-backend.nalinor.dev/api/ai/refactor/', data, header)
+      .then(response => {
+        if (response.code === 0) {
+          console.log("r", response)
+          setDescription(response.message.response)
+          toast("Текст исправлен", {
+            autoClose: 500,
+            type: "action",
+            theme: "dark",
+          });
+        }
+        else {
+          toast(response.message.message, {
+            autoClose: 4000,
+            type: "error",
+            theme: "dark"
+          })
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        toast("Произошла ошибка при получении данных", {
+          autoClose: 2500,
+          type: "error",
+          theme: "dark"
+        });
+      });
+  }
+
   useEffect(() => {
     if (postProject.value !== undefined) {
 
@@ -322,7 +360,10 @@ export default function CreationPostPage() {
 
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
-    accept: ['image/*', 'video/*'],
+    accept: {
+      'image/*': ['.jpeg', '.jpg', '.png'],
+     },
+ 
     onDrop: acceptedFiles => {
       setFiles(acceptedFiles.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
@@ -393,8 +434,8 @@ export default function CreationPostPage() {
   }, [creationPostId])
 
 
-  return (<div className=" min-vh-100 d-flex justify-content-center align-items-cente mw-30" id="content">
-    <form>
+  return (<div className=" min-vh-100 d-flex justify-content-center align-items-center mw-30" id="content">
+    <form className="m-5">
       <h1 className="text-center">Новый пост</h1>
       <div className="form-group p-2">
         <input value={postTitle} onChange={e => setPostTitle(e.target.value)} type="text" className="form-control" id="name" placeholder="Название поста" />
@@ -442,7 +483,7 @@ export default function CreationPostPage() {
       <div className="form-group p-2 border" id='fileUploader'>
           <div {...getRootProps({ className: 'dropzone d-flex' })}>
             <input {...getInputProps()} />
-            <i class="bi-cloud-upload-fill pe-3"></i>
+            <i className="bi-cloud-upload-fill pe-3"></i>
             <p>Перетащите файлы сюда или кликните для загрузки</p>
           </div>
           <aside style={thumbsContainer}>
@@ -450,7 +491,7 @@ export default function CreationPostPage() {
           </aside>
       </div>
       <div className="form-group p-2">
-        <ReactQuill
+        <ReactQuill 
           value={description}
           onChange={(e) => {
             console.log(e)
@@ -460,9 +501,9 @@ export default function CreationPostPage() {
           theme="snow"
           placeholder="Введите содержимое для поста или запрос для генерации"
         />
-        <div className="p-2 d-flex justify-content-center">
+        <div className="p-2 d-flex justify-content-between">
           <button type="button" onClick={handleOnclickGenerate} className="ai-button"><i className="bi bi-robot"></i> Сгенерировать</button>
-          <button type="button" onClick={handleOnclickGenerate} className="ai-button refactor-ai-button"><i className="bi bi-robot"></i> Исправить</button>
+          <button type="button" onClick={handleOnclickRefactor} className="ai-button refactor-ai-button"><i className="bi bi-robot"></i> Исправить</button>
         </div>
       </div>
       <div className="form-group p-2 d-flex">
