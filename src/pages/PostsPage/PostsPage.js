@@ -3,6 +3,9 @@ import PostsPageHeader from "./PostsPageHeader";
 import { Outlet } from "react-router-dom";
 import sendRequest from "../../api/sendRequest";
 import { toast } from "react-toastify";
+import Joyride from "react-joyride";
+import {Display_onboarding_if_needed} from "../../utils/Display_onboarding_if_needed";
+import {ADD_PROJECT_TOUR_CONF, FIRST_TOUR_CONF, VIEW_PROJECT_TOUR_CONF} from "../../data/onboarding/configs";
 
 
 export default function PostsPage() {
@@ -50,8 +53,9 @@ export default function PostsPage() {
             <div className=''>
                 <PostsPageHeader />
             </div>
-            <div className="tab-content" id="pills-tabContent">
+            <div className="tab-content c-posts-page" id="pills-tabContent">
                 <Outlet context={[allData]} />
+                <Display_onboarding_if_needed data={FIRST_TOUR_CONF}/>
             </div>
         </>
     )

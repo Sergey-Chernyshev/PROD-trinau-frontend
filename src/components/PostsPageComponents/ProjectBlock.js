@@ -56,7 +56,7 @@ export default function ProjectBlock(props) {
     }
 
     return (
-        <li className="list-group-item mt-3 mb-4 project text-light" style={{ borderRadius: '12px' }}>
+        <li className="list-group-item mt-3 mb-4 project text-light c-project-card" style={{ borderRadius: '12px' }}>
             <div className='d-flex justify-content-between align-items-center'>
                 <h1>{data.name}</h1>
                 <div className="d-flex align-items-center">
@@ -70,7 +70,7 @@ export default function ProjectBlock(props) {
                             <li><Link onClick={handleProjectDelete} projectid={data.id} className="dropdown-item">Удалить</Link></li>
                         </ul>
                     </div>
-                    <Link to="/createpost" className="me-2 btn btn-warning c-create-post noborder-left" role="button">Добавить пост</Link>
+                    <Link to="/createpost" className="me-2 btn btn-warning c-create-post noborder-left c-create-post" role="button">Добавить пост</Link>
                 </div>
             </div>
             <ul className="list-group">

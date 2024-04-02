@@ -5,6 +5,8 @@ import Select from 'react-select';
 import sendRequest from "../../api/sendRequest";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import {Display_onboarding_if_needed} from "../../utils/Display_onboarding_if_needed";
+import {ADD_PROJECT_TOUR_CONF} from "../../data/onboarding/configs";
 
 
 export default function CreationProjectPage() {
@@ -330,6 +332,7 @@ export default function CreationProjectPage() {
   }, [respIdProject]);
   
   return (<div className=" min-vh-100 d-flex justify-content-center" id="content">
+    <Display_onboarding_if_needed data={ADD_PROJECT_TOUR_CONF}/>
     <form >
       <h1 className="text-center">Новый проект</h1>
       <div className="form-group p-2">
@@ -354,6 +357,7 @@ export default function CreationProjectPage() {
           styles={style}
           isLoading={endAddAllChannelsForSelect}
           isDisabled={endAddAllChannelsForSelect}
+          id="channel-list"
         />
       </div>
       <div className="p-2">
@@ -375,6 +379,7 @@ export default function CreationProjectPage() {
           styles={style}
           isLoading={endAddAllUsersForSelect}
           isDisabled={endAddAllUsersForSelect}
+          id="participant-list"
         />
       </div>
 

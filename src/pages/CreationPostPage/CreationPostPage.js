@@ -15,6 +15,8 @@ import { useNavigate } from "react-router-dom";
 
 import Dropzone from 'react-dropzone'
 import { useDropzone } from 'react-dropzone';
+import {Display_onboarding_if_needed} from "../../utils/Display_onboarding_if_needed";
+import {ADD_POST_TOUR_CONF} from "../../data/onboarding/configs";
 // import { Redirect } from 'react-router'
 
 
@@ -435,6 +437,7 @@ export default function CreationPostPage() {
 
 
   return (<div className=" min-vh-100 d-flex justify-content-center align-items-center mw-30" id="content">
+    <Display_onboarding_if_needed data={ADD_POST_TOUR_CONF}/>
     <form className="m-5">
       <h1 className="text-center">Новый пост</h1>
       <div className="form-group p-2">
@@ -457,6 +460,7 @@ export default function CreationPostPage() {
               <span style={{ marginLeft: 5 }}>{e.text}</span>
             </div>
           )}
+          id="project-select"
 
         />
         <p className="p-2">Нет проекта? <Link to={"/creationproject"} className="link-success">Создать</Link></p>
@@ -478,6 +482,7 @@ export default function CreationPostPage() {
           )}
           onChange={handleChangeSelectChanals}
           styles={style}
+          id="channel-select"
         />
       </div>
       <div className="form-group p-2 border" id='fileUploader'>
@@ -500,13 +505,14 @@ export default function CreationPostPage() {
           modules={modules}
           theme="snow"
           placeholder="Введите содержимое для поста или запрос для генерации"
+          id="content-field"
         />
         <div className="p-2 d-flex justify-content-between">
           <button type="button" onClick={handleOnclickGenerate} className="ai-button"><i className="bi bi-robot"></i> Сгенерировать</button>
           <button type="button" onClick={handleOnclickRefactor} className="ai-button refactor-ai-button"><i className="bi bi-robot"></i> Исправить</button>
         </div>
       </div>
-      <div className="form-group p-2 d-flex">
+      <div className="form-group p-2 d-flex" id="schedule-fields">
         <input type="date" className="form-control" onChange={handleChangeDate} value={date} />
         <input type="time" className="form-control" onChange={handleChangeTime} value={time} />
       </div>
