@@ -20,8 +20,8 @@ export default function PostBlock(props) {
                 </div>
             </div>
             <div className="p-2">
-                <p>
-                    {data.text}
+                <p dangerouslySetInnerHTML={{__html: data.text}}>
+                    {/* {data.text} */}
                 </p>
                 <div className="d-flex justify-content-start mb-3 align-items-center">
                 </div>
