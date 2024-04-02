@@ -22,6 +22,7 @@ import CalendarPage from './pages/CalendarPage/CalendarPage';
 import CreationProjectPage from './pages/CerationProjectPage/CreationProjectPage';
 import LoginTelegrammPage from './pages/LoginTelegrammPage/LoginTelegrammPage';
 import PostsPageAll from './pages/PostsPage/PostsPageAll';
+import NotificationsPage from "./pages/NotificationsPage/NotificationsPage";
 
 
 
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
         {
           path: 'statistic/:idpost/:idproject',
           element: <StatisticPage />
+        },
+        {
+          path: 'statistic/',
+          element: <NotificationsPage />
         },
         {
           path: 'creationproject',
