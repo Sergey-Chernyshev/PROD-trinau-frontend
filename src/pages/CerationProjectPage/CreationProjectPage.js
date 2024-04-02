@@ -4,6 +4,9 @@ import "react-quill/dist/quill.snow.css";
 import Select from 'react-select';
 import sendRequest from "../../api/sendRequest";
 import { toast } from "react-toastify";
+import Joyride from 'react-joyride';
+import {ADD_PROJECT_TOUR_CONF, FIRST_TOUR_CONF} from '../../data/onboarding/configs';
+import {Display_onboarding_if_needed} from "../../utils/Display_onboarding_if_needed";
 
 
 
@@ -145,6 +148,8 @@ export default function CreationProjectPage() {
   }
 
   return (<div className=" min-vh-100 d-flex justify-content-center align-items-cente" id="content">
+        <Display_onboarding_if_needed
+            data={ADD_PROJECT_TOUR_CONF}/>
     <form >
       <h1 className="text-center">Новый проект</h1>
       <div className="form-group p-2">
@@ -165,6 +170,7 @@ export default function CreationProjectPage() {
             </div>
           )}
           filterOption={filterOption}
+          id="channel-list"
         />
         <p className="p-2">Не нашли нужный канал? <a className="link-success">Добавить</a></p>
       </div>
@@ -183,6 +189,7 @@ export default function CreationProjectPage() {
             </div>
           )}
           filterOption={filterOption}
+          id="participant-list"
         />
       </div>
 

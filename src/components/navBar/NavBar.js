@@ -39,10 +39,10 @@ width:  100% !important;`)
   return (
     <div className="col p-3 bg-black" id="navbar">
       <ul className="nav nav-pills flex-sm-column justify-content-center mb-auto">
-        <NavBarLink linkTo="/posts" text=" Проекты" icon="bi-house" />
+        <NavBarLink linkTo="/posts" text=" Проекты" icon="bi-house"  id="navbar-posts-link"/>
         <NavBarLink linkTo="/calendar" text=" Календарь" icon="bi-calendar3" />
         <NavBarLink linkTo="/statistic" text=" Статистика" icon="bi-sliders" />
-        <NavBarLink linkTo="/profile" text=" Профиль" icon="bi-person-circle" />
+        <NavBarLink linkTo="/profile" text=" Профиль" icon="bi-person-circle" id="navbar-profile-link"/>
       </ul>
     </div>
   );

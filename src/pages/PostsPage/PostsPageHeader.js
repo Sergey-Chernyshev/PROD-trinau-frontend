@@ -6,7 +6,7 @@ export default function PostsPageHeader() {
 
     return (
 <>
-        <ul className="nav nav-pills nav-fill mb-3 ml-3 bg-black border-1" style={{borderRadius : "6px"}} role="tablist">
+        <ul className="nav nav-pills nav-fill mb-3 ml-3 bg-black border-1 c-post-cat-pills" style={{borderRadius : "6px"}} role="tablist">
             <li className="nav-item" role="presentation">
                 <NavLink to="/posts/public">
                     {({ isActive }) => (
@@ -31,9 +31,9 @@ export default function PostsPageHeader() {
 
         </ul>
         <div className="d-flex justify-content-center my-1">
-            <Link to="/creationproject" className="mx-2 p-1 btn btn-outline-success" role="button">Добавить проект</Link>
+            <Link to="/creationproject" className="mx-2 p-1 btn btn-outline-success" role="button" id="add-project-button">Добавить проект</Link>
             </div>
-      <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search"/>
+      <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" id="search-projects-field"/>
 </>
     )
 }

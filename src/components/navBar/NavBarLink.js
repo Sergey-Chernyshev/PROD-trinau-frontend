@@ -2,11 +2,11 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 export default function NavBarLink(props) {
-  const { linkTo, text, icon } = props;
+  const { linkTo, text, icon, id } = props;
   
 
   return (
-    <li className="nav-item">
+    <li className="nav-item" id={id}>
       <NavLink
         to={linkTo}
         className={({ isActive }) => {

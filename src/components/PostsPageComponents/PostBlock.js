@@ -5,11 +5,11 @@ export default function PostBlock(props) {
     const { data } = props;
 
     return (
-        <li className="list-group-item mt-3 mb-3" style={{ borderRadius: '12px' }}>
+        <li className="list-group-item mt-3 mb-3 c-post-card" style={{ borderRadius: '12px' }}>
             <div className="d-flex justify-content-between">
                 <h3>Название</h3>
                 <div className="dropdown">
-                    <button className="btn btn-sm" type="button" id="dropdownMenuButton1"
+                    <button className="btn btn-sm c-post-actions" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-list"></i>
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
