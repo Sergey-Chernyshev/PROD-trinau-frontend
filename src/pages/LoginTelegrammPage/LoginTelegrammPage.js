@@ -197,7 +197,7 @@ export default function LoginTelegrammPage() {
                         {
                             loginStage === 3 && (
                                 <input
-                                    type="number"
+                                    type="text"
                                     value={inputPassword}
                                     onChange={e => setInputPassword(e.target.value)}
                                     className="form-control"

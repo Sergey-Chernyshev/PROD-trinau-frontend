@@ -112,7 +112,8 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <>
+  {/* <React.StrictMode> */}
     {/* <BrowserRouter> */}
       <RouterProvider router={router}> 
         <App />
@@ -130,8 +131,8 @@ createRoot(document.getElementById('root')).render(
         theme="dark"
       />
     {/* </BrowserRouter> */}
-  </React.StrictMode>
-  
+  {/* </React.StrictMode> */}
+  </>
 )
 // root.render(
 //       {/* <BrowserRouter> */}

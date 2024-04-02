@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PostsPageHeader from "./PostsPageHeader";
 import { Outlet } from "react-router-dom";
 import sendRequest from "../../api/sendRequest";
@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 
 export default function PostsPage() {
+    const [allData, setAllData] = useState()
     const loginToken = localStorage.getItem("accessToken");
     useEffect(() => {
 
@@ -18,7 +19,9 @@ export default function PostsPage() {
         )
             .then((response) => {
                 console.log(response);
+                
                 if (response.code === 0) {
+                    setAllData(response)
                     toast("Данные загружены", {
                         autoClose: 1500,
                         type: "success",
@@ -48,7 +51,7 @@ export default function PostsPage() {
                 <PostsPageHeader />
             </div>
             <div className="tab-content" id="pills-tabContent">
-                <Outlet />
+                <Outlet context={[allData]} />
             </div>
         </>
     )
