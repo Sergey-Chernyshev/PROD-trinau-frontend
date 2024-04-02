@@ -4,7 +4,7 @@ import "react-quill/dist/quill.snow.css";
 import Select from 'react-select';
 import sendRequest from "../../api/sendRequest";
 import { toast } from "react-toastify";
-
+import { useNavigate } from "react-router-dom";
 
 
 export default function CreationProjectPage() {
@@ -16,6 +16,7 @@ export default function CreationProjectPage() {
     })
   };
 
+  const navigate = useNavigate();
 
   const [data_channels, setdata_channels] = useState([])
   const [data_users, setdata_users] = useState([])
@@ -156,6 +157,9 @@ export default function CreationProjectPage() {
             autoClose: 1500,
             type: "action",
             theme: "dark",
+            onClose: () => {
+              navigate("/posts/all");
+          },
           });
         }
         else {
@@ -177,7 +181,7 @@ export default function CreationProjectPage() {
   }
   useEffect(() => {
     if (respIdProject !== undefined) {
-      selectedChannelOption.forEach(el => {
+      selectedChannelOption?.forEach(el => {
         const dataChannel = {
           type: "telegram",
           name: el.text,

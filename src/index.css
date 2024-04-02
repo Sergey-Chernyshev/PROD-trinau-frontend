@@ -83,7 +83,7 @@ a {
 
 
 
-#AIButton {
+.ai-button {
   width: 200px;
   height: 40px;
   border: none;
@@ -96,7 +96,7 @@ a {
   border-radius: 10px;
 }
 
-#AIButton:before {
+.ai-button:before {
   content: '';
   background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
   position: absolute;
@@ -113,19 +113,19 @@ a {
   border-radius: 10px;
 }
 
-#AIButton:active {
+.ai-button:active {
   color: #fff
 }
 
-#AIButton:active:after {
+.ai-button:active:after {
   background: transparent;
 }
 
-#AIButton:hover:before {
+.ai-button:hover:before {
   opacity: 1;
 }
 
-#AIButton:after {
+.ai-button:after {
   z-index: -1;
   content: '';
   position: absolute;

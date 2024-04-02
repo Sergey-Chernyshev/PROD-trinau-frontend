@@ -75,7 +75,6 @@ const router = createBrowserRouter([
               path: '/posts/all',
               element:  <PostsPageAll/>
             },
-
           ]
         },
         {
@@ -89,6 +88,10 @@ const router = createBrowserRouter([
         {
           path: 'createpost',
           element:  <CreationPostPage/>
+        },
+        {
+          path: 'statistic/:idpost/:idproject',
+          element: <StatisticPage />
         },
         {
           path: 'creationproject',

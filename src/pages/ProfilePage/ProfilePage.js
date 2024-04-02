@@ -20,6 +20,8 @@ export default function ProfilePage() {
     const [responseData, setResponseData] = useState({
         username: "Загрузка...",
     });
+    const [accounts, setAccounts] = useState([])
+
     const navigate = useNavigate();
 
     const loginToken = localStorage.getItem("accessToken");
@@ -72,6 +74,40 @@ export default function ProfilePage() {
         }
     }, []);
 
+    useEffect(()=>{
+        const header = "Authorization: Bearer " + loginToken;
+            sendRequest(
+                "GET",
+                "https://trinau-backend.nalinor.dev/api/bindings/",
+                null,
+                header
+            )
+            .then((response) => {
+                console.log(response);
+                if (response.code === 0) {
+                    setAccounts(response.message);
+                    toast("Привязки загружены", {
+                        autoClose: 1500,
+                        type: "success",
+                        theme: "dark",
+                    });
+                } else {
+                    toast(response.message.message, {
+                        autoClose: 4000,
+                        type: "error",
+                        theme: "dark",
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                toast("Произошла ошибка при получении данных", {
+                    autoClose: 2500,
+                    type: "error",
+                    theme: "dark",
+                });
+            });
+    }, []);
 
 
 
@@ -96,9 +132,20 @@ export default function ProfilePage() {
 
                 </div>
                 <div className="tab-pane fade" id="pills-channels" role="tabpanel" aria-labelledby="pills-channels-tab">...</div>
-                <div className="tab-pane fade" id="pills-acounts" role="tabpanel" aria-labelledby="pills-acounts-tab">
-
-                    <Link to="/logintelegramm" className="btn btn-primary" role="button"><i className="bi-telegram"></i> Привязать аккаунт Telegram </Link>
+                <div className="d-flex justify-content-between tab-pane fade" id="pills-acounts" role="tabpanel" aria-labelledby="pills-acounts-tab">
+                    <div>
+                            <h3>Привязанные аккаунты</h3>
+                        <ul className="list-group">
+                            <li className="list-group-item">Cras justo odio</li>
+                            <li className="list-group-item">Dapibus ac facilisis in</li>
+                            <li className="list-group-item">Morbi leo risus</li>
+                            <li className="list-group-item">Porta ac consectetur ac</li>
+                            <li className="list-group-item">Vestibulum at eros</li>
+                        </ul>
+                    </div>
+                    <div className="">
+                        <Link to="/logintelegramm" className="btn btn-primary" role="button"><i className="bi-telegram"></i> Привязать аккаунт Telegram </Link>
+                    </div>
                 </div>
             </div>
         </>

@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { CartesianGrid, Legend, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Line } from "recharts";
+import sendRequest from "../../api/sendRequest";
 
 
 const data = [
@@ -49,9 +52,47 @@ const data = [
 
 export default function StatisticPage() {
 
+    const { idpost, idproject } = useParams();
+
+    console.log(idpost, idproject)
+
+    useEffect(() => {
+    const loginToken = localStorage.getItem("accessToken");
+      const header = "Authorization: Bearer " + loginToken;
+      sendRequest('GET', `https://trinau-backend.nalinor.dev/api/projects/${idproject}/posts/${idpost}/stats/1/`, null, header)
+        .then(response => {
+          if (response.code === 0) {
+            console.log("r", response)
+            toast("Получение статистики", {
+              autoClose: 500,
+              type: "action",
+              theme: "dark",
+            });
+          }
+          else {
+            toast(response.message.message, {
+              autoClose: 4000,
+              type: "error",
+              theme: "dark"
+            })
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          toast("Произошла ошибка при получении данных", {
+            autoClose: 2500,
+            type: "error",
+            theme: "dark"
+          });
+        });
+    }, []);
+
+
+
+
     return (
         <>
-            <div>Стастистика</div>
+            <div>Стастистика для поста с id: {idpost}</div>
             <ResponsiveContainer width={500} height={500}>
                 <LineChart
                     width={500}

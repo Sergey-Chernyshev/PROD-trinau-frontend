@@ -22,7 +22,7 @@ export default function ProjectBlock(props) {
                         dataPosts.posts
                             .filter(e => e.is_sent)
                             .map((e, i) => (
-                                <PostBlock key={i} data={e} />
+                                <PostBlock key={i} data={e} statusText={'Было опубликовано'} projectId={data.id}/>
                             ))
                     )
                 }
@@ -31,7 +31,7 @@ export default function ProjectBlock(props) {
                         dataPosts.posts
                             .filter(e => !e.is_sent && e.schedule_time !== null)
                             .map((e, i) => (
-                                <PostBlock key={i} data={e} />
+                                <PostBlock key={i} data={e} statusText={'Будет опубликовано в'} projectId={data.id} />
                             ))
                     )
                 }
@@ -40,14 +40,14 @@ export default function ProjectBlock(props) {
                         dataPosts.posts
                             .filter(e => e.schedule_time === null)
                             .map((e, i) => (
-                                <PostBlock key={i} data={e} />
+                                <PostBlock key={i} data={e} statusText={'Время публикации не добавлено'} projectId={data.id}/>
                             ))
                     )
                 }
                 {
                     type === "all" && (
                         dataPosts.posts.map((e, i) => (
-                            <PostBlock key={i} data={e} />
+                            <PostBlock key={i} data={e}  statusText={'Было опубликовано в'} projectId={data.id} />
                         ))
                     )
                 }

@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import sendRequest from "../../api/sendRequest.js";
 import { useEffect } from "react";
 import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import Dropzone from 'react-dropzone'
 import { useDropzone } from 'react-dropzone';
@@ -81,7 +82,7 @@ export default function CreationPostPage() {
       boxShadow: 'none',
     })
   };
-
+  const navigate = useNavigate();
 
   const [projects, setProjects] = useState([])
   const [data_projects, setdata_projects] = useState([])
@@ -214,7 +215,9 @@ export default function CreationPostPage() {
             autoClose: 500,
             type: "action",
             theme: "dark",
-
+            onClose: () => {
+              navigate("/posts/all");
+          },
           });
         }
         else {
@@ -458,7 +461,8 @@ export default function CreationPostPage() {
           placeholder="Введите содержимое для поста или запрос для генерации"
         />
         <div className="p-2 d-flex justify-content-center">
-          <button type="button" onClick={handleOnclickGenerate} id="AIButton"><i className="bi bi-robot"></i> Сгенерировать</button>
+          <button type="button" onClick={handleOnclickGenerate} className="ai-button"><i className="bi bi-robot"></i> Сгенерировать</button>
+          <button type="button" onClick={handleOnclickGenerate} className="ai-button refactor-ai-button"><i className="bi bi-robot"></i> Исправить</button>
         </div>
       </div>
       <div className="form-group p-2 d-flex">
