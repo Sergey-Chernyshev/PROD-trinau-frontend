@@ -4,7 +4,18 @@ import sendRequest from "../../api/sendRequest";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+
+
+
+
+
 export default function ProfilePage() {
+
+
+
+
+
+
     const [showNatification, setShowNatification] = useState();
     const [responseData, setResponseData] = useState({
         username: "Загрузка...",
@@ -13,9 +24,7 @@ export default function ProfilePage() {
 
     const loginToken = localStorage.getItem("accessToken");
 
-    const successOnClose = () => {
-        console.log("regirect");
-    };
+
     useEffect(() => {
         if (loginToken !== null) {
             const header = "Authorization: Bearer " + loginToken;
@@ -33,7 +42,7 @@ export default function ProfilePage() {
                             autoClose: 1500,
                             type: "success",
                             theme: "dark",
-                            onClose: successOnClose(),
+                            // onClose: successOnClose(),
                         });
                     } else {
                         toast(response.message.message, {
@@ -63,28 +72,35 @@ export default function ProfilePage() {
         }
     }, []);
 
+
+
+
     return (
         <>
-                <h1 className="text-center">{responseData.username}</h1>
-                <ul className="nav nav-pills nav-fill mb-3 bg-black"  style={{borderRadius : "6px"}} role="tablist">
-                    <li className="nav-item" role="presentation">
-                        <button className="nav-link active" id="pills-projects-tab" data-bs-toggle="pill" data-bs-target="#pills-projects" type="button" role="tab" aria-controls="pills-projects" aria-selected="true">Проекты</button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                        <button className="nav-link" id="pills-channels-tab" data-bs-toggle="pill" data-bs-target="#pills-channels" type="button" role="tab" aria-controls="pills-channels" aria-selected="false">Каналы</button>
-                    </li>
-                    <li className="nav-item" role="presentation">
-                        <button className="nav-link" id="pills-acounts-tab" data-bs-toggle="pill" data-bs-target="#pills-acounts" type="button" role="tab" aria-controls="pills-acounts" aria-selected="false">Аккаунты</button>
-                    </li>
-                </ul>
-                <div className="tab-content" id="pills-tabContent">
-                    <div className="tab-pane fade show active" id="pills-projects" role="tabpanel" aria-labelledby="pills-projects-tab">...</div>
-                    <div className="tab-pane fade" id="pills-channels" role="tabpanel" aria-labelledby="pills-channels-tab">...</div>
-                    <div className="tab-pane fade" id="pills-acounts" role="tabpanel" aria-labelledby="pills-acounts-tab">
+            <h1 className="text-center">{responseData.username}</h1>
+            <ul className="nav nav-pills nav-fill mb-3 bg-black" style={{ borderRadius: "6px" }} role="tablist">
+                <li className="nav-item" role="presentation">
+                    <button className="nav-link active" id="pills-projects-tab" data-bs-toggle="pill" data-bs-target="#pills-projects" type="button" role="tab" aria-controls="pills-projects" aria-selected="true">Проекты</button>
+                </li>
+                <li className="nav-item" role="presentation">
+                    <button className="nav-link" id="pills-channels-tab" data-bs-toggle="pill" data-bs-target="#pills-channels" type="button" role="tab" aria-controls="pills-channels" aria-selected="false">Каналы</button>
+                </li>
+                <li className="nav-item" role="presentation">
+                    <button className="nav-link" id="pills-acounts-tab" data-bs-toggle="pill" data-bs-target="#pills-acounts" type="button" role="tab" aria-controls="pills-acounts" aria-selected="false">Аккаунты</button>
+                </li>
+            </ul>
+            <div className="tab-content" id="pills-tabContent">
+                <div className="tab-pane fade show active" id="pills-projects" role="tabpanel" aria-labelledby="pills-projects-tab">
+
+
+
+                </div>
+                <div className="tab-pane fade" id="pills-channels" role="tabpanel" aria-labelledby="pills-channels-tab">...</div>
+                <div className="tab-pane fade" id="pills-acounts" role="tabpanel" aria-labelledby="pills-acounts-tab">
 
                     <Link to="/logintelegramm" className="btn btn-primary" role="button"><i className="bi-telegram"></i> Привязать аккаунт Telegram </Link>
-                    </div>
                 </div>
+            </div>
         </>
     );
 }

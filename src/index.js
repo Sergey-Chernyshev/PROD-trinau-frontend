@@ -43,6 +43,10 @@ const router = createBrowserRouter([
       path: '/',
       element:  <App/>,
       children: [
+        {         
+          index: true,
+          element: <Navigate to="/posts/all" replace />,
+        },
         {
           path: 'profile',
           element:  <ProfilePage/>
@@ -53,7 +57,7 @@ const router = createBrowserRouter([
           children: [
             {         
               index: true,
-              element: <Navigate to="/posts/public" replace />,
+              element: <Navigate to="/posts/all" replace />,
             },
             {
               path: '/posts/public',

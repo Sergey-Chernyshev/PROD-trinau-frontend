@@ -23,7 +23,7 @@ export default function PostsPageAll() {
             aria-labelledby="pills-all-tab">
             <ul className="list-group">
                 {allData.message.map((e, i) => (
-                    <ProjectBlock key={i} data={e} />
+                    <ProjectBlock key={i} data={e} type="all" />
                 ))}
             </ul>
         </div>

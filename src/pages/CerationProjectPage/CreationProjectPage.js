@@ -116,7 +116,7 @@ export default function CreationProjectPage() {
       return [
         ...prevDataChannels,
         ...allChannelsForSelect.map(channel => ({
-          value: channel.id,
+          value: channel.id, 
           text: channel.name,
           binding: channel.binding,
           icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">

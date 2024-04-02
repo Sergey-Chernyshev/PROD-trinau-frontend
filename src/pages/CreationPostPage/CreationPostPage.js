@@ -10,6 +10,43 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import sendRequest from "../../api/sendRequest.js";
 import { useEffect } from "react";
+import { redirect } from "react-router-dom";
+
+import Dropzone from 'react-dropzone'
+import { useDropzone } from 'react-dropzone';
+// import { Redirect } from 'react-router'
+
+
+const thumbsContainer = {
+  display: 'flex',
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  marginTop: 16
+};
+
+const thumb = {
+  display: 'inline-flex',
+  borderRadius: 2,
+  border: '1px solid #eaeaea',
+  marginBottom: 8,
+  marginRight: 8,
+  width: 100,
+  height: 100,
+  padding: 4,
+  boxSizing: 'border-box'
+};
+
+const thumbInner = {
+  display: 'flex',
+  minWidth: 0,
+  overflow: 'hidden'
+};
+
+const img = {
+  display: 'block',
+  width: 'auto',
+  height: '100%'
+};
 
 const { EmojiBlot, ShortNameEmoji, ToolbarEmoji, TextAreaEmoji } = quillEmoji;
 
@@ -27,7 +64,6 @@ const modules = {
     ["blockquote", "code-block"],
     [
       "link",
-      // "image",
       "video"],
     ['emoji'],
     ["clean"],
@@ -55,10 +91,14 @@ export default function CreationPostPage() {
   const [description, setDescription] = useState('')
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
-
+  const [postResponse, setPostResponse] = useState('')
 
   const [backDataChannels, setBackDataChannels] = useState([])
   const [dataChannelsForSelect, setDataChannelsForSelect] = useState([])
+
+  const [creationPostId,setCreationPostId] = useState()
+
+
 
   useEffect(() => {
     console.log(backDataChannels)
@@ -159,19 +199,22 @@ export default function CreationPostPage() {
       name: postTitle,
       text: description,
       target_channels: formedChannel(postChanal),
-      schedule_time: (date && time) ? new Date(date + ' ' + time).toISOString().replace('Z', '+03:00') : null
+      schedule_time: (date && time) ? new Date(date + ' ' + time).toISOString() : null
     }
+    console.log(data)
     const loginToken = localStorage.getItem("accessToken");
     const header = "Authorization: Bearer " + loginToken;
     sendRequest('POST', `https://trinau-backend.nalinor.dev/api/projects/${postProject.value}/posts/`, data, header)
       .then(response => {
         if (response.code === 0) {
+
           console.log("r", response)
-          setDescription(response.message.response)
+          setCreationPostId(response.message.id)
           toast("Пост создан", {
             autoClose: 500,
             type: "action",
             theme: "dark",
+
           });
         }
         else {
@@ -231,43 +274,123 @@ export default function CreationPostPage() {
   }
   useEffect(() => {
     if (postProject.value !== undefined) {
-      
-    
-    const loginToken = localStorage.getItem("accessToken");
-    const header = "Authorization: Bearer " + loginToken;
-    sendRequest('GET', `https://trinau-backend.nalinor.dev/api/projects/${postProject.value}`, null, header)
-      .then(response => {
-        if (response.code === 0) {
-          console.log("r", response)
-          setBackDataChannels(response.message.channels)
-          toast("Получение каналов проекта", {
-            autoClose: 500,
-            type: "action",
-            theme: "dark",
-          });
-        }
-        else {
-          toast(response.message.message, {
-            autoClose: 4000,
+
+
+      const loginToken = localStorage.getItem("accessToken");
+      const header = "Authorization: Bearer " + loginToken;
+      sendRequest('GET', `https://trinau-backend.nalinor.dev/api/projects/${postProject.value}`, null, header)
+        .then(response => {
+          if (response.code === 0) {
+            console.log("r", response)
+            setBackDataChannels(response.message.channels)
+            toast("Получение каналов проекта", {
+              autoClose: 500,
+              type: "action",
+              theme: "dark",
+            });
+          }
+          else {
+            toast(response.message.message, {
+              autoClose: 4000,
+              type: "error",
+              theme: "dark"
+            })
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          toast("Произошла ошибка при получении данных", {
+            autoClose: 2500,
             type: "error",
             theme: "dark"
-          })
-        }
-      })
-      .catch(error => {
-        console.error(error);
-        toast("Произошла ошибка при получении данных", {
-          autoClose: 2500,
-          type: "error",
-          theme: "dark"
+          });
         });
-      });
     }
 
   }, [postProject])
 
+  
 
-  return (<div className=" min-vh-100 d-flex justify-content-center align-items-cente" id="content">
+
+
+  const successOnClose = () => {
+    console.log("regirect");
+  };
+
+  const [files, setFiles] = useState([]);
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: ['image/*', 'video/*'],
+    onDrop: acceptedFiles => {
+      setFiles(acceptedFiles.map(file => Object.assign(file, {
+        preview: URL.createObjectURL(file)
+      })));
+    }
+  });
+
+  const thumbs = files.map(file => (
+    <div style={thumb} key={file.name}>
+      <div style={thumbInner}>
+        <img
+          alt="File"
+          src={file.preview}
+          style={img}
+          // Revoke data uri after image is loaded
+          onLoad={() => { URL.revokeObjectURL(file.preview) }}
+        />
+      </div>
+    </div>
+  ));
+
+  useEffect(() => {
+    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
+    return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+  }, []);
+
+
+  const uploadFiles = () => {
+    const formData = new FormData();
+    files.forEach(file => {
+      formData.append('files', file); // 'photos' - это имя, по которому файлы будут доступны на сервере
+    });
+
+    sendRequest(
+      "POST",
+      `https://trinau-backend.nalinor.dev/api/projects/${postProject.value}/posts/${creationPostId}/files/upload/`, // Поменяйте на URL вашего сервера для загрузки фотографий
+      formData,
+      {
+        "Authorization": `Bearer ${loginToken}`,
+        "Content-Type": "multipart/form-data"
+      }
+    )
+      .then(response => {
+        // Обработка успешного ответа от сервера
+        console.log(response);
+        toast("Фотографии успешно загружены", {
+          autoClose: 1500,
+          type: "success",
+          theme: "dark",
+          onClose: successOnClose,
+        });
+      })
+      .catch(error => {
+        // Обработка ошибки
+        console.error(error);
+        toast("Произошла ошибка при загрузке фотографий", {
+          autoClose: 2500,
+          type: "error",
+          theme: "dark",
+        });
+      });
+  };
+
+  useEffect(() => {
+    if(creationPostId !== undefined) {
+      uploadFiles()
+    }
+  }, [creationPostId])
+
+
+  return (<div className=" min-vh-100 d-flex justify-content-center align-items-cente mw-30" id="content">
     <form>
       <h1 className="text-center">Новый пост</h1>
       <div className="form-group p-2">
@@ -312,7 +435,16 @@ export default function CreationPostPage() {
           onChange={handleChangeSelectChanals}
           styles={style}
         />
-        <p className="p-2">Не нашли нужный канал? <Link to={"/addchannel"} className="link-success">Добавить</Link></p>
+      </div>
+      <div className="form-group p-2 border" id='fileUploader'>
+          <div {...getRootProps({ className: 'dropzone d-flex' })}>
+            <input {...getInputProps()} />
+            <i class="bi-cloud-upload-fill pe-3"></i>
+            <p>Перетащите файлы сюда или кликните для загрузки</p>
+          </div>
+          <aside style={thumbsContainer}>
+            {thumbs}
+          </aside>
       </div>
       <div className="form-group p-2">
         <ReactQuill
@@ -325,15 +457,16 @@ export default function CreationPostPage() {
           theme="snow"
           placeholder="Введите содержимое для поста или запрос для генерации"
         />
-        <button type="button" onClick={handleOnclickGenerate} className="btn btn-warning"><i class="bi bi-robot"></i>Сгенерировать</button>
-
+        <div className="p-2 d-flex justify-content-center">
+          <button type="button" onClick={handleOnclickGenerate} id="AIButton"><i className="bi bi-robot"></i> Сгенерировать</button>
+        </div>
       </div>
       <div className="form-group p-2 d-flex">
         <input type="date" className="form-control" onChange={handleChangeDate} value={date} />
         <input type="time" className="form-control" onChange={handleChangeTime} value={time} />
       </div>
-      <div className="form-group p-2 d-flex justify-content-center">
-        <button type="submit" className="btn btn-outline-success" onClick={createPost}>Создать</button>
+      <div className="d-flex form-group p-2 justify-content-center">
+        <button type="submit" className="btn btn-warning btn-block" style={{width: '100%'}} onClick={createPost}>Создать пост</button>
       </div>
     </form>
   </div>
