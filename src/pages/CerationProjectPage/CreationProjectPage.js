@@ -9,8 +9,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function CreationProjectPage() {
 
-  const { idpost, idproject } = useParams();
-  console.log(idpost, idproject);
+  const { idproject } = useParams();
+  console.log(idproject);
+  let editMode = idproject !== undefined
 
   const style = {
     control: (base, state) => ({
@@ -23,6 +24,8 @@ export default function CreationProjectPage() {
   const navigate = useNavigate();
   const [data_channels, setdata_channels] = useState([])
   const [data_users, setdata_users] = useState([])
+  const [default_channels, setdefault_channels] = useState([])
+  const [default_users, setdefault_users] = useState([])
 
   const [inputTitleProject, setInputTitleProject] = useState('')
   const [selectedChannelOption, setSelectedChannelOption] = useState(null);
@@ -30,9 +33,14 @@ export default function CreationProjectPage() {
 
   const [allUsersForSelect, setAllUsersForSelect] = useState([])
   const [allChannelsForSelect, setAllChannelsForSelect] = useState([])
+  const [defaultUsersForSelect, setDefaultUsersForSelect] = useState([])
+  const [defaultChannelsForSelect, setDefaultChannelsForSelect] = useState([])
 
   const [endAddAllUsersForSelect, setEndAddAllUsersForSelect] = useState(true)
   const [endAddAllChannelsForSelect, setEndAddAllChannelsForSelect] = useState(true)
+  const [endAddDefaultUsersForSelect, setEndAddDefaultUsersForSelect] = useState(true)
+  const [endAddDefaultChannelsForSelect, setEndAddDefaultChannelsForSelect] = useState(true)
+
 
   const [respIdProject, setRespIdProject] = useState()
 
@@ -40,7 +48,11 @@ export default function CreationProjectPage() {
 
   useEffect(() => {
     const header = "Authorization: Bearer " + loginToken
-    sendRequest('GET', 'https://trinau-backend.nalinor.dev/api/users/', null, header)
+    sendRequest(
+        'GET',
+        'https://trinau-backend.nalinor.dev/api/users/',
+        null,
+        header)
       .then(response => {
         if (response.code === 0) {
           setAllUsersForSelect(response.message)
@@ -65,6 +77,32 @@ export default function CreationProjectPage() {
           theme: "dark"
         });
       });
+
+    sendRequest('GET', 'https://trinau-backend.nalinor.dev/api/users/', null, header)
+        .then(response => {
+          if (response.code === 0) {
+            setAllUsersForSelect(response.message)
+            toast("Получены имена", {
+              autoClose: 500,
+              type: "action",
+              theme: "dark",
+            });
+          }
+          else {
+            toast(response.message.message, {
+              autoClose: 4000,
+              type: "error",
+              theme: "dark"
+            })
+          }
+        })
+        .catch(error => {
+          toast("Произошла ошибка при получении данных", {
+            autoClose: 2500,
+            type: "error",
+            theme: "dark"
+          });
+        });
 
     sendRequest('GET', 'https://trinau-backend.nalinor.dev/api/bindings/getChannels/', null, header)
       .then(response => {
@@ -93,10 +131,40 @@ export default function CreationProjectPage() {
         });
       });
 
+    if (!editMode) return;
 
+    sendRequest(
+        'GET',
+        'https://trinau-backend.nalinor.dev/api/projects/'+idproject+"/",
+        null,
+        header)
+        .then(response => {
+          if (response.code === 0) {
+            setDefaultUsersForSelect(response.message.participants)
+            setDefaultChannelsForSelect(response.message.channels)
+            toast("Получены существующие значения", {
+              autoClose: 500,
+              type: "action",
+              theme: "dark",
+            });
+          }
+          else {
+            toast(response.message.message, {
+              autoClose: 4000,
+              type: "error",
+              theme: "dark"
+            })
+          }
+        })
+        .catch(error => {
+          toast("Произошла ошибка при получении данных", {
+            autoClose: 2500,
+            type: "error",
+            theme: "dark"
+          });
+        });
 
   }, []);
-
 
   useEffect(() => {
     setdata_users(prevDataUsers => {
@@ -113,7 +181,6 @@ export default function CreationProjectPage() {
     });
     setEndAddAllUsersForSelect(false);
   }, [allUsersForSelect]);
-
 
   useEffect(() => {
     setdata_channels(prevDataChannels => {
@@ -132,6 +199,39 @@ export default function CreationProjectPage() {
     setEndAddAllChannelsForSelect(false);
   }, [allChannelsForSelect]);
 
+  useEffect(() => {
+    setdefault_users(prevDataUsers => {
+      return [
+        ...prevDataUsers,
+        ...defaultUsersForSelect.map(user => ({
+          value: user.id,
+          text: user.username,
+          icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+          </svg>
+        }))
+      ];
+    });
+    setEndAddDefaultUsersForSelect(false);
+  }, [defaultUsersForSelect]);
+
+  useEffect(() => {
+    setdefault_channels(prevDataChannels => {
+      return [
+        ...prevDataChannels,
+        ...defaultChannelsForSelect.map(channel => ({
+          value: channel.id,
+          text: channel.name,
+          binding: channel.binding,
+          icon: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
+          </svg>
+        }))
+      ];
+    });
+    setEndAddDefaultChannelsForSelect(false);
+    setSelectedChannelOption(defaultChannelsForSelect)
+  }, [defaultChannelsForSelect]);
 
   const handleChangeSelectChannels = e => {
     setSelectedChannelOption(e);
@@ -151,12 +251,15 @@ export default function CreationProjectPage() {
     const dataTitle = {
       name: inputTitleProject
     }
+    let req_method = editMode? "PATCH" : "POST"
+    let req_url = editMode? 'https://trinau-backend.nalinor.dev/api/projects/' :
+        'https://trinau-backend.nalinor.dev/api/projects/' + idproject + "/";
     const header = "Authorization: Bearer " + loginToken
-    sendRequest('POST', 'https://trinau-backend.nalinor.dev/api/projects/', dataTitle, header)
+    sendRequest(req_method, req_url, dataTitle, header)
       .then(response => {
         if (response.code === 0) {
           setRespIdProject(response.message.id)
-          toast("Имя проекта добавлено", {
+          toast("Изменения сохранены", {
             autoClose: 1500,
             type: "action",
             theme: "dark",
@@ -184,7 +287,11 @@ export default function CreationProjectPage() {
   }
   useEffect(() => {
     if (respIdProject !== undefined) {
-      selectedChannelOption?.forEach(el => {
+      let already_created_channels_ids = []
+      defaultChannelsForSelect.forEach(
+          el => already_created_channels_ids.push(el.value))
+      selectedChannelOption?.filter(el => !already_created_channels_ids.includes(el.value))
+        .forEach(el => {
         const dataChannel = {
           type: "telegram",
           name: el.text,
