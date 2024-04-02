@@ -136,11 +136,17 @@ export default function ProfilePage() {
                     <div>
                             <h3>Привязанные аккаунты</h3>
                         <ul className="list-group">
-                            <li className="list-group-item">Cras justo odio</li>
-                            <li className="list-group-item">Dapibus ac facilisis in</li>
-                            <li className="list-group-item">Morbi leo risus</li>
-                            <li className="list-group-item">Porta ac consectetur ac</li>
-                            <li className="list-group-item">Vestibulum at eros</li>
+                            {
+                                 accounts.map((e, i) => (
+                                <li className="list-group-item d-flex justify-content-between align-items-center" id={i}>
+                                    <div>
+                                    <i class="bi bi-telegram me-2"></i>
+                                    {e.name}
+                                    </div>
+                                    <i class="bi bi-x-circle danger" ></i>
+                                    </li>    
+                                    ))
+                            }
                         </ul>
                     </div>
                     <div className="">
