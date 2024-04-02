@@ -180,7 +180,7 @@ export default function CreationProjectPage() {
   }
   useEffect(() => {
     if (respIdProject !== undefined) {
-      selectedChannelOption.forEach(el => {
+      selectedChannelOption?.forEach(el => {
         const dataChannel = {
           type: "telegram",
           name: el.text,
