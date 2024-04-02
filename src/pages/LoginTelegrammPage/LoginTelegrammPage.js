@@ -2,20 +2,23 @@ import React, { useState } from "react";
 import sendRequest from "../../api/sendRequest";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
+
 
 
 export default function LoginTelegrammPage() {
     const [inputPassword, setInputPassword] = useState("")
-    const [inputPhone, setInputPhone] = useState("9996627915")
-    const [inputCode, setInputCode] = useState("22222")
+    const [inputPhone, setInputPhone] = useState("")
+    const [inputCode, setInputCode] = useState("")
     const [authCode, setAuthCode] = useState(null)
     const [loginStage, setLoginStage] = useState(1)
+
     const navigate = useNavigate()
 
     const loginToken = localStorage.getItem("accessToken")
 
 
-    // номер -> код из смс -> пароль или зашел -> ахуенно
     const successOnClose = () => {
         console.log("regirect")
         navigate("/profile")
@@ -166,14 +169,17 @@ export default function LoginTelegrammPage() {
                     <div className="form-group pt-3">
                         {
                             loginStage === 1 && (
-                                <input
-                                    type="phone"
-                                    value={inputPhone}
-                                    onChange={e => setInputPhone(e.target.value)}
-                                    className="form-control"
-                                    id="login"
-                                    placeholder="Номер телефона"
-                                />
+                                <PhoneInput
+                                international
+  countryCallingCodeEditable={false}
+                                defaultCountry="RU"
+                                placeholder="Номер телефона"
+                                className="form-control"
+                                value={inputPhone}
+                                onChange={(e) => {
+                                    setInputPhone(e)
+                                }
+                                }/>
                             )
                         }
                         {
@@ -191,7 +197,7 @@ export default function LoginTelegrammPage() {
                         {
                             loginStage === 3 && (
                                 <input
-                                    type="number"
+                                    type="text"
                                     value={inputPassword}
                                     onChange={e => setInputPassword(e.target.value)}
                                     className="form-control"

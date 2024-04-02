@@ -21,7 +21,7 @@ import StatisticPage from './pages/StatisticPage/StatisticPage';
 import CalendarPage from './pages/CalendarPage/CalendarPage';
 import CreationProjectPage from './pages/CerationProjectPage/CreationProjectPage';
 import LoginTelegrammPage from './pages/LoginTelegrammPage/LoginTelegrammPage';
-
+import PostsPageAll from './pages/PostsPage/PostsPageAll';
 
 
 
@@ -66,7 +66,12 @@ const router = createBrowserRouter([
             {
               path: '/posts/drafts',
               element:  <PostsPageDrafts/>,
-            }
+            },
+            {
+              path: '/posts/all',
+              element:  <PostsPageAll/>
+            },
+
           ]
         },
         {
@@ -107,7 +112,8 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <>
+  {/* <React.StrictMode> */}
     {/* <BrowserRouter> */}
       <RouterProvider router={router}> 
         <App />
@@ -125,8 +131,8 @@ createRoot(document.getElementById('root')).render(
         theme="dark"
       />
     {/* </BrowserRouter> */}
-  </React.StrictMode>
-  
+  {/* </React.StrictMode> */}
+  </>
 )
 // root.render(
 //       {/* <BrowserRouter> */}
