@@ -23,6 +23,8 @@ import CreationProjectPage from './pages/CerationProjectPage/CreationProjectPage
 import LoginTelegrammPage from './pages/LoginTelegrammPage/LoginTelegrammPage';
 import PostsPageAll from './pages/PostsPage/PostsPageAll';
 import NotificationsPage from "./pages/NotificationsPage/NotificationsPage";
+import EditPostPage from "./pages/EditPostPage/EditPostPage";
+import EditProjectPage from "./pages/EditProjectPage/EditProjectPage";
 
 
 
@@ -83,10 +85,6 @@ const router = createBrowserRouter([
           element:  <CalendarPage/>
         },
         {
-          path: 'statistic',
-          element:  <StatisticPage/>
-        },
-        {
           path: 'createpost',
           element:  <CreationPostPage/>
         },
@@ -106,7 +104,14 @@ const router = createBrowserRouter([
           path: 'creationproject/:idproject',
           element:  <CreationProjectPage/>
         },
-        
+        {
+          path: "editpost/:idproject/:idpost",
+          element: <EditPostPage/>
+        },
+        // {
+        //   path: "editproject/:idproject/",
+        //   element: <EditProjectPage/>
+        // }
       ]
   },
   {

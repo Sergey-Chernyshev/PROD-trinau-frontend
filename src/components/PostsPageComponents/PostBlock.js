@@ -114,7 +114,8 @@ export default function PostBlock(props) {
                         </li>
                         <div className="dropdown-divider"></div>
                         <li>
-                            <Link className="dropdown-item" >
+                            <Link className="dropdown-item"
+                            to={`/editpost/${projectid}/${data.id}/`}>
                                 Изменить
                             </Link>
                         </li>

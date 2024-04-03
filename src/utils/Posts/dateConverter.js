@@ -9,3 +9,4 @@ export default function dateConverter(isoDate) {
     const formattedDate = `${hours}:${minutes} ${day}.${month}.${year} (${dayOfWeek})`;
     return formattedDate;
 }
+
