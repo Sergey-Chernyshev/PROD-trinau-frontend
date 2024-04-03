@@ -246,7 +246,7 @@ export default function EditPostPage() {
         <input type="time" className="form-control" onChange={handleChangeTime} value={time} />
       </div>
       <div className="d-flex form-group p-2 justify-content-center">
-        <button type="submit" className="btn btn-warning btn-block" style={{width: '100%'}} onClick={createPost}>Создать пост</button>
+        <button type="submit" className="btn btn-warning btn-block" style={{width: '100%'}} onClick={createPost}>Применть</button>
       </div>
     </form>
   </div>

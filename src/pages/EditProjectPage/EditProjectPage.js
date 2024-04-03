@@ -146,17 +146,21 @@ export default function EditProjectPage() {
         header,
         response => {
           setProjectData(response.message)
+          setInputTitleProject(response.message.name)
         }
     )
   }, []);
 
   useEffect(() => {
     let options = []
+    console.log(projectData?.participants, data_users)
     data_users.forEach((e, i) => {
-      if (projectData.participants.includes(e.id))
+      if (projectData.participants.includes(e.value))
         options.push(e)
     })
-  }, [allUsersForSelect]);
+    console.log(options)
+    setSelectedUserOption(options)
+  }, [allUsersForSelect, projectData]);
 
 
   const handleChangeSelectUsers = e => {
@@ -173,7 +177,7 @@ export default function EditProjectPage() {
     e.preventDefault()
     let participants = []
     selectedUserOption?.forEach((e, i) => {
-      participants.push(e.id)
+      participants.push(e.value)
     })
     sendRequestWrapper(
         "PATCH",
@@ -226,7 +230,7 @@ export default function EditProjectPage() {
       </div>
 
       <div className="form-group p-2 d-flex justify-content-center">
-        <button onClick={handleSubmitProjectForm} className="btn btn-outline-success">Создать</button>
+        <button onClick={handleSubmitProjectForm} className="btn btn-outline-success">Применить</button>
       </div>
     </form>
   </div>
