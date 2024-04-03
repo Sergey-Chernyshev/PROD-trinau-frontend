@@ -18,6 +18,8 @@ export default function StatisticPage() {
 
     const [channelTitle, setChannelTitle] = useState("Загрузка данных...")
 
+    const [postData, setPostData] = useState("Загрузка...")
+
     useEffect(() => {
     const loginToken = localStorage.getItem("accessToken");
       const header = "Authorization: Bearer " + loginToken;
@@ -27,6 +29,32 @@ export default function StatisticPage() {
             setChannelTitle(response.message[0].channel.name)
             console.log("r", response.message)
             setStaticData(response.message)
+            toast("Получение статистики", {
+              autoClose: 500,
+              type: "action",
+              theme: "dark",
+            });
+          }
+          else {
+            toast(response.message.message, {
+              autoClose: 4000,
+              type: "error",
+              theme: "dark"
+            })
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          toast("Произошла ошибка при получении данных", {
+            autoClose: 2500,
+            type: "error",
+            theme: "dark"
+          });
+        });
+      sendRequest('GET', `https://trinau-backend.nalinor.dev/api/projects/${idproject}/posts/${idpost}/`, null, header)
+        .then(response => {
+          if (response.code === 0) {
+            setPostData(response.message)
             toast("Получение статистики", {
               autoClose: 500,
               type: "action",
@@ -83,10 +111,11 @@ export default function StatisticPage() {
 
     return (
         <>
-            <div>Стастистика для поста: {channelTitle}</div>
-            <ResponsiveContainer width="100%" height={500}>
+            <div className='d-flex m-5'>Стастистика для поста: {postData.name} из канала {channelTitle}</div>
+            <div className="d-flex"></div>
+            <ResponsiveContainer width="50%" height={500}>
                 <LineChart
-                    width={500}
+                    width={250}
                     height={300}
                     data={dataViews}
                     margin={{
@@ -101,12 +130,12 @@ export default function StatisticPage() {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="views" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="views" stroke="#00402f" />
                 </LineChart>
             </ResponsiveContainer>
-            <ResponsiveContainer width="100%" height={500}>
+            <ResponsiveContainer width="50%" height={500}>
                 <LineChart
-                    width={500}
+                    width={250}
                     height={300}
                     data={dataReactions}
                     margin={{
@@ -121,7 +150,7 @@ export default function StatisticPage() {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="reactions" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="reactions" stroke="#00402f" />
                 </LineChart>
             </ResponsiveContainer>
         </>

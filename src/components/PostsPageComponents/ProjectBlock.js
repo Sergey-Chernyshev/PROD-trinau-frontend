@@ -63,10 +63,10 @@ export default function ProjectBlock(props) {
                     <div className="dropdown">
                         <button className="btn btn-warning noborder-right c-post-actions" type="button" id="dropdownMenuButton1"
                             data-bs-toggle="dropdown" aria-expanded="false"
-                            ><i className="bi bi-list"></i>
+                        ><i className="bi bi-list"></i>
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><Link to={"/creationproject/"+data.id} className="dropdown-item">Изменить</Link></li>
+                            <li><Link to={`/creationproject/${data.id}/`} className="dropdown-item">Изменить</Link></li>
                             <li><Link onClick={handleProjectDelete} projectid={data.id} className="dropdown-item">Удалить</Link></li>
                         </ul>
                     </div>
@@ -102,11 +102,23 @@ export default function ProjectBlock(props) {
                     )
                 }
                 {
-                    type === "all" && (
-                        dataPosts.posts.map((e, i) => (
-                            <PostBlock key={i} data={e} statusText={'Было опубликовано в'} projectid={data.id} />
-                        ))
+                    // const filteredTags = storeData.filter((tag) =>
+                    // tag.title.toLowerCase().includes(searchTerm.toLowerCase())
+                    // );
+                     type === "all" && (
+                        dataPosts.posts.map((element, i) => {
+                            if (element.schedule_time === null){
+                                return <PostBlock key={i} data={element} statusText={'Время публикации не добавлено'} projectid={data.id} />;
+                            } else {
+                                const postDate = new Date(element.schedule_time).getTime();
+                                if (postDate >= new Date().getTime()) {
+                                    return <PostBlock key={i} data={element} statusText={'Будет опубликовано в'} projectid={data.id} />;
+                                }
+                                return <PostBlock key={i} data={element} statusText={'Было опубликовано в'} projectid={data.id} />;
+                            }
+                        })
                     )
+
                 }
             </ul>
         </li>

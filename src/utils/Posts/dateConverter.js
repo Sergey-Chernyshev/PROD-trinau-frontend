@@ -1,4 +1,7 @@
 export default function dateConverter(isoDate) {
+    if (isoDate === null) {
+        return ""
+    }
     const dateObj = new Date(isoDate);
     const hours = String(dateObj.getHours()).padStart(2, '0');
     const minutes = String(dateObj.getMinutes()).padStart(2, '0');

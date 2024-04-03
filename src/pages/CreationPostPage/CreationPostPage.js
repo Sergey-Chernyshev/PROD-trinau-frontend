@@ -59,15 +59,16 @@ Quill.register({
   'modules/emoji-toolbar': ToolbarEmoji,
   'modules/emoji-textarea': TextAreaEmoji
 }, true);
+var icons = Quill.import("ui/icons");
+icons["undo"] = 'UNDO';
+icons["redo"] = 'REDO';
 
 const modules = {
   toolbar: [
     ["bold", "italic", "underline", "strike"],
     [{ script: "sub" }, { script: "super" }],
     ["blockquote", "code-block"],
-    [
-      "link",
-      "video"],
+    ["link"],
     ['emoji'],
     ["clean"],
   ],
@@ -94,7 +95,9 @@ export default function CreationPostPage() {
   const [description, setDescription] = useState('')
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
-  const [postResponse, setPostResponse] = useState('')
+  const [generation, setGeneration] = useState('')
+  const [refactoring, setRefactoring] = useState('')
+  const [videoNote, setVideoNote] = useState('')
 
   const [backDataChannels, setBackDataChannels] = useState([])
   const [dataChannelsForSelect, setDataChannelsForSelect] = useState([])
@@ -169,6 +172,9 @@ export default function CreationPostPage() {
     console.log("d", data_projects)
   }, [projects]);
 
+  const toggleVideoNote = (_) => {
+    setVideoNote(!videoNote)
+  }
 
   const handleChangeDate = (e) => {
     setDate(e.target.value)
@@ -243,6 +249,7 @@ export default function CreationPostPage() {
 
   const handleOnclickGenerate = (e) => {
     e.preventDefault();
+    setGeneration(true)
     const data = {
       text: description
     }
@@ -254,6 +261,7 @@ export default function CreationPostPage() {
         if (response.code === 0) {
           console.log("r", response)
           setDescription(response.message.response)
+          setGeneration(false)
           toast("Текст сгенерирован", {
             autoClose: 500,
             type: "action",
@@ -280,6 +288,7 @@ export default function CreationPostPage() {
 
   const handleOnclickRefactor = (e) => {
     e.preventDefault();
+    setRefactoring(true)
     const data = {
       text: description
     }
@@ -291,6 +300,7 @@ export default function CreationPostPage() {
         if (response.code === 0) {
           console.log("r", response)
           setDescription(response.message.response)
+          setRefactoring(false)
           toast("Текст исправлен", {
             autoClose: 500,
             type: "action",
@@ -362,10 +372,13 @@ export default function CreationPostPage() {
 
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
-    accept: {
+    accept: videoNote ?  {
+      'video/*': ['.mp4', '.mov'],
+     } : {
       'image/*': ['.jpeg', '.jpg', '.png'],
+      'video/*': ['.mp4', '.mov'],
      },
- 
+    maxFiles: videoNote ? 1 : 10,
     onDrop: acceptedFiles => {
       setFiles(acceptedFiles.map(file => Object.assign(file, {
         preview: URL.createObjectURL(file)
@@ -398,6 +411,7 @@ export default function CreationPostPage() {
     files.forEach(file => {
       formData.append('files', file); // 'photos' - это имя, по которому файлы будут доступны на сервере
     });
+    formData.set('is_video_note', videoNote)
 
     sendRequest(
       "POST",
@@ -434,8 +448,6 @@ export default function CreationPostPage() {
       uploadFiles()
     }
   }, [creationPostId])
-
-
   return (<div className=" min-vh-100 d-flex justify-content-center align-items-center mw-30" id="content">
     <Display_onboarding_if_needed data={ADD_POST_TOUR_CONF}/>
     <form className="m-5">
@@ -494,6 +506,7 @@ export default function CreationPostPage() {
           <aside style={thumbsContainer}>
             {thumbs}
           </aside>
+          <button type="button" onClick={toggleVideoNote} className="btn-warning"><i className="bi bi-robot"></i> Сгенерировать</button>
       </div>
       <div className="form-group p-2">
         <ReactQuill 
@@ -508,12 +521,13 @@ export default function CreationPostPage() {
           id="content-field"
         />
         <div className="p-2 d-flex justify-content-between">
-          <button type="button" onClick={handleOnclickGenerate} className="ai-button"><i className="bi bi-robot"></i> Сгенерировать</button>
-          <button type="button" onClick={handleOnclickRefactor} className="ai-button refactor-ai-button"><i className="bi bi-robot"></i> Исправить</button>
+          <button type="button" onClick={handleOnclickGenerate} className={generation ? "ai-button ai-process" : "ai-button"}><i className="bi bi-robot"></i> Сгенерировать</button>
+          <button type="button" onClick={handleOnclickRefactor} className={refactoring ? "ai-button refactor-ai-button ai-process" : "ai-button refactor-ai-button"}><i className="bi bi-robot"></i> Исправить</button>
+          {/* className={isVariableTrue ? "ai-button refactor-ai-button dop" : "ai-button refactor-ai-button"} */}
         </div>
       </div>
       <div className="form-group p-2 d-flex" id="schedule-fields">
-        <input type="date" className="form-control" onChange={handleChangeDate} value={date} />
+      <input type="date" min={new Date(new Date().setHours(new Date().getHours() + 3)).toISOString().split('T')[0]} className="form-control" onChange={handleChangeDate} value={date} />
         <input type="time" className="form-control" onChange={handleChangeTime} value={time} />
       </div>
       <div className="d-flex form-group p-2 justify-content-center">

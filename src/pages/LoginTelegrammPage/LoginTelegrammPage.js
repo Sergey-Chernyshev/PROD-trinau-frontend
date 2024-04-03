@@ -197,7 +197,7 @@ export default function LoginTelegrammPage() {
                         {
                             loginStage === 3 && (
                                 <input
-                                    type="text"
+                                    type="password"
                                     value={inputPassword}
                                     onChange={e => setInputPassword(e.target.value)}
                                     className="form-control"
@@ -211,10 +211,6 @@ export default function LoginTelegrammPage() {
                     <div className="d-flex justify-content-center mt-4">
                         <button onClick={handleLoginChangeStage} className="btn btn-outline-success mb-4">Далее</button>
                     </div>
-
-                    {/* <div className="text-center mt-3 text-light">
-                        <p>Нет записи? <Link className="link-success" to="/register">Регистрация</Link></p>
-                    </div> */}
                 </form>
             </div>
         </div>
