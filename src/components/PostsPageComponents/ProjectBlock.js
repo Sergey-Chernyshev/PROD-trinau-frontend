@@ -66,7 +66,8 @@ export default function ProjectBlock(props) {
                         ><i className="bi bi-list"></i>
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><Link to={`/creationproject/${data.id}/`} className="dropdown-item">Изменить</Link></li>
+                            <li><Link to={`/workflow/${data.id}/`} className="dropdown-item">Рабочии стадии</Link></li>
+                            <li><Link to={`/editproject/${data.id}/`} className="dropdown-item">Изменить</Link></li>
                             <li><Link onClick={handleProjectDelete} projectid={data.id} className="dropdown-item">Удалить</Link></li>
                         </ul>
                     </div>

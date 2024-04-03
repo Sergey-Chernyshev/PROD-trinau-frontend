@@ -39,7 +39,7 @@ function sendRequestWrapper(method, url, data, header,
 }
 
 
-export default function WorkflowStagesPage() {
+export default function WorkflowPushesPage() {
 
   const { idproject } = useParams();
 
@@ -52,7 +52,7 @@ export default function WorkflowStagesPage() {
   };
 
   const navigate = useNavigate();
-  const [stages, setStages] = useState([])
+  const [pushes, setPushes] = useState([])
 
   const loginToken = localStorage.getItem("accessToken");
   const header = "Authorization: Bearer " + loginToken
@@ -60,12 +60,12 @@ export default function WorkflowStagesPage() {
   useEffect(() => {
     sendRequest(
         'GET',
-        `https://trinau-backend.nalinor.dev/api/projects/${idproject}/workflow/stages/`,
+        `https://trinau-backend.nalinor.dev/api/projects/${idproject}/workflow/pushes/`,
         null,
         header)
       .then(response => {
         if (response.code === 0) {
-          setStages(response.message)
+          setPushes(response.message)
           toast("Получены стадии", {
             autoClose: 500,
             type: "action",
@@ -88,58 +88,21 @@ export default function WorkflowStagesPage() {
         });
       });
   }, []);
-
-  const handleAddStage = (e) => {
-    e.preventDefault()
-    let stage = prompt("Enter stage name")
-    if (stage === null) return;
-    sendRequestWrapper(
-        "POST",
-        `https://trinau-backend.nalinor.dev/api/projects/${idproject}/workflow/stages/`,
-        {"name": stage, "is_end": false},
-        header,
-        response => {
-          window.location.href = `/workflow/${idproject}/`
-        }
-    )
-  }
-
-  const handleRemoveStage = (e) => {
-    e.preventDefault()
-    let p_id = e.target.getAttribute("projectId");
-    let s_id = e.target.getAttribute("stageId");
-    // eslint-disable-next-line no-restricted-globals
-    let ans = confirm("Точно удалить эту стадию?")
-    if (ans === null || ans === false)
-      return;
-    sendRequestWrapper(
-        "DELETE",
-        `https://trinau-backend.nalinor.dev/api/projects/${p_id}/workflows/stages/${s_id}`,
-        null,
-        header,
-        response => {
-          window.location.href = `/workflow/${idproject}/`
-        }
-    )
-  }
   
   return (<div className=" min-vh-100" id="content">
-        <h1 className="text-center">Рабочие стадии проекта #{idproject}</h1>
-          <Link to={`/workflow/${idproject}/pushes`} className="">Лог изменений</Link>
+        <h1 className="text-center">Изменения рабочих стадий проекта #{idproject}</h1>
+          <Link to={`/workflow/${idproject}/`} className="">Назад к стадиям</Link>
           <br/>
-        <button className="btn btn-primary mb-3" onClick={handleAddStage}>Добавить стадию</button>
         <div className="list-group">
-          {stages.map((e, i) => (
+          {pushes.map((e, i) => (
               <div className="list-group-item d-flex gap-3 py-3" aria-current="true">
                 <i className="bi bi-flag-fill"></i>
                 <div className="d-flex gap-2 w-100 justify-content-between">
                   <div>
-                    <p className="mb-0 opacity-75">{e.name}</p>
+                    <small>{e.user.username}: {dateConverter(e.pushed_at)}</small>
+                    <p className="mb-0 opacity-75">{e.from_stage?.name} -> {e.to_stage?.name}</p>
+                    <small>{e.post.name}</small>
                   </div>
-                  <button className="btn btn-danger"
-                          projectId={idproject} stageId={e.id}
-                          onClick={handleRemoveStage}>Удалить
-                  </button>
                 </div>
               </div>
           ))

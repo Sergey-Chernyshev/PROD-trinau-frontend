@@ -25,6 +25,8 @@ import PostsPageAll from './pages/PostsPage/PostsPageAll';
 import NotificationsPage from "./pages/NotificationsPage/NotificationsPage";
 import EditPostPage from "./pages/EditPostPage/EditPostPage";
 import EditProjectPage from "./pages/EditProjectPage/EditProjectPage";
+import WorkflowPushesPage from "./pages/WorkflowPushesPage/WorkflowPushesPage";
+import WorkflowStagesPage from "./pages/WorkflowStagesPage/WorkflowStagesPage";
 
 
 
@@ -111,6 +113,14 @@ const router = createBrowserRouter([
         {
           path: "editproject/:idproject/",
           element: <EditProjectPage/>
+        },
+        {
+          path: "workflow/:idproject/",
+          element: <WorkflowStagesPage/>
+        },
+        {
+          path: "workflow/:idproject/pushes",
+          element: <WorkflowPushesPage/>
         }
       ]
   },
