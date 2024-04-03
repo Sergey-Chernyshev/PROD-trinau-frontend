@@ -4,6 +4,7 @@ const initialState = {
   token: null,
   id: null,
   username: null,
+  input:'',
 }
 
 export const userSlice = createSlice({
