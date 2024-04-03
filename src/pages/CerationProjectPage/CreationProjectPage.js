@@ -135,40 +135,6 @@ export default function CreationProjectPage() {
           theme: "dark"
         });
       });
-
-    if (!editMode) return;
-
-    sendRequest(
-        'GET',
-        'https://trinau-backend.nalinor.dev/api/projects/'+idproject+"/",
-        null,
-        header)
-        .then(response => {
-          if (response.code === 0) {
-            setDefaultUsersForSelect(response.message.participants)
-            setDefaultChannelsForSelect(response.message.channels)
-            toast("Получены существующие значения", {
-              autoClose: 500,
-              type: "action",
-              theme: "dark",
-            });
-          }
-          else {
-            toast(response.message.message, {
-              autoClose: 4000,
-              type: "error",
-              theme: "dark"
-            })
-          }
-        })
-        .catch(error => {
-          toast("Произошла ошибка при получении данных", {
-            autoClose: 2500,
-            type: "error",
-            theme: "dark"
-          });
-        });
-
   }, []);
 
   useEffect(() => {
@@ -266,9 +232,8 @@ export default function CreationProjectPage() {
       name: inputTitleProject,
       participants: idUsersSelected
     }
-    let req_method = editMode? "PATCH" : "POST"
-    let req_url = editMode? 'https://trinau-backend.nalinor.dev/api/projects/' :
-        'https://trinau-backend.nalinor.dev/api/projects/' + idproject + "/";
+    let req_method =  "POST"
+    let req_url = 'https://trinau-backend.nalinor.dev/api/projects/'
     const header = "Authorization: Bearer " + loginToken
     sendRequest(req_method, req_url, dataTitle, header)
       .then(response => {

@@ -108,10 +108,10 @@ const router = createBrowserRouter([
           path: "editpost/:idproject/:idpost",
           element: <EditPostPage/>
         },
-        // {
-        //   path: "editproject/:idproject/",
-        //   element: <EditProjectPage/>
-        // }
+        {
+          path: "editproject/:idproject/",
+          element: <EditProjectPage/>
+        }
       ]
   },
   {

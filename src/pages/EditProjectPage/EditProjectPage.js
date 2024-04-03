@@ -153,7 +153,7 @@ export default function EditProjectPage() {
   useEffect(() => {
     let options = []
     data_users.forEach((e, i) => {
-      if (projectData.includes(e.id))
+      if (projectData.participants.includes(e.id))
         options.push(e)
     })
   }, [allUsersForSelect]);
