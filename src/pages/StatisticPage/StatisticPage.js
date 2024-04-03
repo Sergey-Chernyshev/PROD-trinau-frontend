@@ -15,6 +15,7 @@ export default function StatisticPage() {
 
     const [dataViews, setDataViews] = useState([])
     const [dataReactions, setDataReactions] = useState([])
+    const [dataengagement_rate, setengagement_rate] = useState([])
 
     const [channelTitle, setChannelTitle] = useState("Загрузка данных...")
 
@@ -26,6 +27,7 @@ export default function StatisticPage() {
       sendRequest('GET', `https://trinau-backend.nalinor.dev/api/projects/${idproject}/posts/${idpost}/stats/1/`, null, header)
         .then(response => {
           if (response.code === 0) {
+            console.log(response)
             if (response.message.length < 1) {
                 toast("Пока нет данных по этому посту", {
                     autoClose: 4000,
@@ -111,6 +113,13 @@ export default function StatisticPage() {
         }));
         return [...formattedData];
       });
+      setengagement_rate(prevDataViews => {
+        const formattedData = staticData?.map(data => ({
+          time: formatTime(data.created_at),
+          engagement_rate: data.engagement_rate
+        }));
+        return [...formattedData];
+      });
 
     }, [staticData]); 
     
@@ -122,7 +131,7 @@ export default function StatisticPage() {
             <h3>Стастистика для поста: {postData.name} из канала {channelTitle}</h3>
             <div className="d-flex justify-content-center">
             <ResponsiveContainer width="100%" height={500}>
-              <p className="text-center"></p>
+              <p className="text-center">Просмотры</p>
                 <LineChart
                     width={500}
                     height={300}
@@ -143,7 +152,7 @@ export default function StatisticPage() {
                 </LineChart>
             </ResponsiveContainer>
             <ResponsiveContainer width="100%" height={500}>
-            <p className="text-center">Просмотры</p>
+            <p className="text-center">Реакции</p>
 
                 <LineChart
                     width={500}
@@ -164,7 +173,33 @@ export default function StatisticPage() {
                     <Line type="monotone" dataKey="reactions" stroke="#00402f" />
                 </LineChart>
             </ResponsiveContainer>
+
             
+            </div>
+            <div style={{marginTop:"90px", paddingBottom:"300px"}}>
+
+            <ResponsiveContainer top="100px" width="100%" height={500}>
+            <p className="text-center">Показатель заинтерисованности аулитории(engagement_rate)</p>
+
+                <LineChart
+                    width={500}
+                    height={300}
+                    data={dataengagement_rate}
+                    margin={{
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
+                    }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="time" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="engagement_rate" stroke="#00402f" />
+                </LineChart>
+            </ResponsiveContainer>
             </div>
         </>
 
