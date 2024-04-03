@@ -13,24 +13,6 @@ import sendRequest from './api/sendRequest';
 
 function App() {
 
-  useEffect(() => {
-    const loginToken = localStorage.getItem("accessToken");
-    const header = {
-      "Authorization": `Bearer ${loginToken}`
-    };
-
-    sendRequest('POST', `https://trinau-backend.nalinor.dev/api/bindings/getChannels/reload/`, null, header)
-      .then(response => {
-        console.log(response);
-        // Добавьте свою логику обработки ответа здесь
-      })
-      .catch(error => {
-        console.error('Request error:', error);
-        // Добавьте обработку ошибок здесь
-      });
-
-
-  }, []);
 
 
   return (

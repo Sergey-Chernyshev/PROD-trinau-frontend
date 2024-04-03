@@ -98,7 +98,7 @@ a {
 
 .ai-button:before {
   content: '';
-  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #aeff00, #9000ff, #ff00e1, #ea00ff, #ff00c8, #ff0000);
   position: absolute;
   top: -2px;
   left:-2px;
@@ -160,9 +160,22 @@ a {
   border-radius: 10px;
 }
 
+.ai-process:after {
+  background: transparent;
+}
+.ai-process:before {
+  opacity: 1;
+}
+
 .noborder-right{
   border-radius: 0.375rem 0px 0px 0.375rem !important;
 }
 .noborder-left {
   border-radius: 0px 0.375rem 0.375rem 0px !important;
+}
+.user-data-group{
+  max-height: 300px;
+  margin-bottom: 10px;
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
 }

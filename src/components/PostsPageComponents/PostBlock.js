@@ -59,9 +59,9 @@ export default function PostBlock(props) {
         let proj_id = e.target.getAttribute("projectid");
         let post_id = e.target.getAttribute("postid");
         console.log(proj_id, post_id)
-        toast("Начата генерация превью", {
+        toast("Генерация превью...", {
             autoClose: 2500,
-            type: "error",
+            type: "action",
             theme: "dark"
         });
         const header = "Authorization: Bearer " + loginToken
@@ -97,9 +97,9 @@ export default function PostBlock(props) {
     return (
         <li className="list-group-item mt-3 mb-3" style={{ borderRadius: '12px' }}>
             <div className="d-flex justify-content-between">
-                <Link to={`/statistic/${data.id}/${projectid}`}><h4> <i className="bi-graph-up me-2"></i>{data.name}</h4></Link>
+                <Link to={`/statistic/${data.id}/${projectid}`} className="link-dark"><h4> <i className="bi-graph-up me-2"></i>{data.name}</h4></Link>
                 <div className="dropdown">
-                    <button className="btn btn-sm" type="button" id="dropdownMenuButton1"
+                    <button className="btn btn" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-expanded="false"><i className="bi bi-list"></i>
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">

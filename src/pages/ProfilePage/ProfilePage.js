@@ -21,12 +21,28 @@ export default function ProfilePage() {
         username: "Загрузка...",
     });
     const [accounts, setAccounts] = useState([])
+    const [allChannels, setAllChannels] = useState([])
 
     const navigate = useNavigate();
 
     const loginToken = localStorage.getItem("accessToken");
-
-
+    const exit = () => {
+        localStorage.setItem("accessToken", "");
+        navigate("/login")
+    }
+    const refreshChannels = ()  => {
+        const loginToken = localStorage.getItem("accessToken");
+        const header = {
+          "Authorization": `Bearer ${loginToken}`
+        };
+        sendRequest('POST', `https://trinau-backend.nalinor.dev/api/bindings/getChannels/reload/`, null, header)
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.error('Request error:', error);
+          });
+    }
     useEffect(() => {
         if (loginToken !== null) {
             const header = "Authorization: Bearer " + loginToken;
@@ -62,6 +78,37 @@ export default function ProfilePage() {
                         theme: "dark",
                     });
                 });
+
+            sendRequest('GET', 'https://trinau-backend.nalinor.dev/api/bindings/getChannels/', null, header)
+                .then(response => {
+                  if (response.code === 0) {
+                    console.log(response)
+                    setAllChannels(response.message)
+                    toast("Получены каналы", {
+                      autoClose: 500,
+                      type: "action",
+                      theme: "dark",
+                    });
+                  }
+                  else {
+                    toast(response.message.message, {
+                      autoClose: 4000,
+                      type: "error",
+                      theme: "dark"
+                    })
+                  }
+                })
+                .catch(error => {
+                  toast("Произошла ошибка при получении данных", {
+                    autoClose: 2500,
+                    type: "error",
+                    theme: "dark"
+                  });
+                });
+          
+          
+          
+
         } else {
             toast("Вы не авторизованы. Редирект...", {
                 autoClose: 1500,
@@ -113,29 +160,50 @@ export default function ProfilePage() {
 
     return (
         <>
-            <h1 className="text-center">{responseData.username}</h1>
+        <div className='d-flex justify-content-between text-align-center'>
+           <div>
+
+            <h1 >{responseData.username}</h1>
+           </div>
+            <div>
+            <button type="button" onClick={exit} className="ms-2 btn btn-danger"> <i className="bi bi-box-arrow-right"></i> </button>
+</div>
+        </div>
             <ul className="nav nav-pills nav-fill mb-3 bg-black" style={{ borderRadius: "6px" }} role="tablist">
                 <li className="nav-item" role="presentation">
-                    <button className="nav-link active" id="pills-projects-tab" data-bs-toggle="pill" data-bs-target="#pills-projects" type="button" role="tab" aria-controls="pills-projects" aria-selected="true">Проекты</button>
-                </li>
-                <li className="nav-item" role="presentation">
-                    <button className="nav-link" id="pills-channels-tab" data-bs-toggle="pill" data-bs-target="#pills-channels" type="button" role="tab" aria-controls="pills-channels" aria-selected="false">Каналы</button>
+                    <button className="nav-link active" id="pills-channels-tab" data-bs-toggle="pill" data-bs-target="#pills-channels" type="button" role="tab" aria-controls="pills-channels" aria-selected="true">Каналы</button>
                 </li>
                 <li className="nav-item" role="presentation">
                     <button className="nav-link" id="pills-acounts-tab" data-bs-toggle="pill" data-bs-target="#pills-acounts" type="button" role="tab" aria-controls="pills-acounts" aria-selected="false">Аккаунты</button>
                 </li>
             </ul>
             <div className="tab-content" id="pills-tabContent">
-                <div className="tab-pane fade show active" id="pills-projects" role="tabpanel" aria-labelledby="pills-projects-tab">
-
-
-
+                <div className=" tab-pane fade show active" id="pills-channels" role="tabpanel" aria-labelledby="pills-channels-tab">
+                <div className='d-flex justify-content-center'>
+                <div>
+                            <h3>Добавленные каналы</h3>
+                        <ul className="list-group user-data-group ms-5">
+                            {
+                                 allChannels.map((e, i) => (
+                                <li className="list-group-item d-flex justify-content-between align-items-center" key={i}>
+                                    <div>
+                                    <i className="bi bi-telegram me-2"></i>
+                                    {e.name}
+                                    </div>
+                                    </li>    
+                                    ))
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                <button type="button" onClick={refreshChannels} className="ms-2 btn btn-dark"> <i className="bi bi-arrow-clockwise"></i></button>
+                        </div>
+                        </div>
                 </div>
-                <div className="tab-pane fade" id="pills-channels" role="tabpanel" aria-labelledby="pills-channels-tab">...</div>
                 <div className="d-flex justify-content-between tab-pane fade" id="pills-acounts" role="tabpanel" aria-labelledby="pills-acounts-tab">
                     <div>
                             <h3>Привязанные аккаунты</h3>
-                        <ul className="list-group">
+                        <ul className="list-group user-data-group">
                             {
                                  accounts.map((e, i) => (
                                 <li className="list-group-item d-flex justify-content-between align-items-center" key={i}>
@@ -143,13 +211,12 @@ export default function ProfilePage() {
                                     <i className="bi bi-telegram me-2"></i>
                                     {e.name}
                                     </div>
-                                    <i className="bi bi-x-circle danger" ></i>
                                     </li>    
                                     ))
                             }
                         </ul>
                     </div>
-                    <div className="">
+                    <div>
                         <Link to="/logintelegramm" className="btn btn-primary" role="button"><i className="bi-telegram"></i> Привязать аккаунт Telegram </Link>
                     </div>
                 </div>

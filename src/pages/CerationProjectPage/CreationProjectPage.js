@@ -9,8 +9,10 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function CreationProjectPage() {
 
-  const { idpost, idproject } = useParams();
-  console.log(idpost, idproject);
+  const { idproject } = useParams();
+  const [titlePage, setTitlePage] = useState("Создание проекта")
+
+
 
   const style = {
     control: (base, state) => ({
@@ -26,7 +28,7 @@ export default function CreationProjectPage() {
 
   const [inputTitleProject, setInputTitleProject] = useState('')
   const [selectedChannelOption, setSelectedChannelOption] = useState(null);
-  const [selectedUserOption, setSelectedUserOption] = useState();
+  const [selectedUserOption, setSelectedUserOption] = useState([]);
 
   const [allUsersForSelect, setAllUsersForSelect] = useState([])
   const [allChannelsForSelect, setAllChannelsForSelect] = useState([])
@@ -35,6 +37,8 @@ export default function CreationProjectPage() {
   const [endAddAllChannelsForSelect, setEndAddAllChannelsForSelect] = useState(true)
 
   const [respIdProject, setRespIdProject] = useState()
+
+  const [idUsersSelected, setIdUsersSelected] = useState([])
 
   const loginToken = localStorage.getItem("accessToken");
 
@@ -138,6 +142,7 @@ export default function CreationProjectPage() {
   }
   const handleChangeSelectUsers = e => {
     setSelectedUserOption(e);
+    
   }
   const handleChangeInputTitleProject = e => {
     setInputTitleProject(e.target.value);
@@ -146,10 +151,19 @@ export default function CreationProjectPage() {
     return option.data.text.toLowerCase().includes(inputValue.toLowerCase());
   }
 
+  useEffect( () => {
+    console.log(selectedUserOption)
+    const usersIds = selectedUserOption.map(obj => obj.value);
+    setIdUsersSelected(usersIds)
+  }, [selectedUserOption])
+
   const handleSubmitProjectForm = (e) => {
     e.preventDefault()
+    // const usersIds = 
+    console.log(idUsersSelected)
     const dataTitle = {
-      name: inputTitleProject
+      name: inputTitleProject,
+      participants: idUsersSelected
     }
     const header = "Authorization: Bearer " + loginToken
     sendRequest('POST', 'https://trinau-backend.nalinor.dev/api/projects/', dataTitle, header)
@@ -219,12 +233,14 @@ export default function CreationProjectPage() {
             });
           });
       });
+
+
     }
   }, [respIdProject]);
   
   return (<div className=" min-vh-100 d-flex justify-content-center" id="content">
     <form >
-      <h1 className="text-center">Новый проект</h1>
+      <h1 className="text-center">{titlePage}</h1>
       <div className="form-group p-2">
         <input value={inputTitleProject} onChange={(e) => { handleChangeInputTitleProject(e) }} type="text" className="form-control" id="name" placeholder="Название проекта" />
       </div>

@@ -4,9 +4,10 @@ import { Link, NavLink } from "react-router-dom";
 
 export default function PostsPageHeader() {
 
+
     return (
         <>
-            <ul className="nav nav-pills nav-fill mb-3 bg-black border-1" style={{ borderRadius: "6px" }} role="tablist">
+            <ul className="nav nav-pills flex-column flex-sm-row nav-fill mb-3 bg-black border-1" style={{ borderRadius: "6px" }} role="tablist">
                 <li className="nav-item" role="presentation">
                     <NavLink to="/posts/all">
                         {({ isActive }) => (
