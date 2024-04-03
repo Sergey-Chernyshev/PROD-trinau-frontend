@@ -242,8 +242,9 @@ export default function EditPostPage() {
         </div>
       </div>
       <div className="form-group p-2 d-flex" id="schedule-fields">
-        <input type="date" className="form-control" onChange={handleChangeDate} value={date} />
-        <input type="time" className="form-control" onChange={handleChangeTime} value={time} />
+        <label htmlFor="date_field" className="p-2">Дата публикации </label>
+        <input type="date" id="date_field" className="form-control" onChange={handleChangeDate} value={date}/>
+        <input type="time" className="form-control" onChange={handleChangeTime} value={time}/>
       </div>
       <div className="d-flex form-group p-2 justify-content-center">
         <button type="submit" className="btn btn-warning btn-block" style={{width: '100%'}} onClick={createPost}>Применть</button>

@@ -179,7 +179,7 @@ export default function StatisticPage() {
             <div style={{marginTop:"90px", paddingBottom:"300px"}}>
 
             <ResponsiveContainer top="100px" width="100%" height={500}>
-            <p className="text-center">Показатель заинтерисованности аулитории(engagement_rate)</p>
+            <p className="text-center">Показатель заинтерисованности аудитории (Engagement Rate)</p>
 
                 <LineChart
                     width={500}

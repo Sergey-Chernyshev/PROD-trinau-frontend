@@ -16,7 +16,7 @@ export default function PostsPageDrafts(){
             aria-labelledby="pills-home-tab">
             <ul className="list-group">
                 {allData.message.map((e, i) => (
-                    <ProjectBlock key={i} data={e} type="draft" />
+                    <ProjectBlock key={i} data={e} type="drafts" />
                 ))}
             </ul>
         </div>

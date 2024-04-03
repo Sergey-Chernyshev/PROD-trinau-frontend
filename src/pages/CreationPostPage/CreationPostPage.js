@@ -543,7 +543,8 @@ export default function CreationPostPage() {
         </div>
       </div>
       <div className="form-group p-2 d-flex" id="schedule-fields">
-      <input type="date" min={new Date(new Date().setHours(new Date().getHours() + 3)).toISOString().split('T')[0]} className="form-control" onChange={handleChangeDate} value={date} />
+        <label htmlFor="date_field" className="p-2">Дата публикации </label>
+      <input type="date" id="date_field" min={new Date(new Date().setHours(new Date().getHours() + 3)).toISOString().split('T')[0]} className="form-control" onChange={handleChangeDate} value={date} />
         <input type="time" className="form-control" onChange={handleChangeTime} value={time} />
       </div>
       <div className="d-flex form-group p-2 justify-content-center">

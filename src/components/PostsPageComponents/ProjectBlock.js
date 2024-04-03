@@ -54,6 +54,8 @@ export default function ProjectBlock(props) {
                 });
             });
     }
+    console.log(dataPosts.posts
+        .filter(e => e.schedule_time === null))
 
     return (
         <li className="list-group-item mt-3 mb-4 project text-light c-project-card" style={{ borderRadius: '12px' }}>
