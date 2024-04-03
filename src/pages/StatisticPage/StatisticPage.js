@@ -26,6 +26,14 @@ export default function StatisticPage() {
       sendRequest('GET', `https://trinau-backend.nalinor.dev/api/projects/${idproject}/posts/${idpost}/stats/1/`, null, header)
         .then(response => {
           if (response.code === 0) {
+            if (response.message.length < 1) {
+                toast("Пока нет данных по этому посту", {
+                    autoClose: 4000,
+                    type: "error",
+                    theme: "dark"
+                })
+                return;
+            }
             setChannelTitle(response.message[0].channel.name)
             console.log("r", response.message)
             setStaticData(response.message)
