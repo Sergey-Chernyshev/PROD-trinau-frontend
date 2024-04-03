@@ -10,7 +10,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 function App() {
   const navigate = useNavigate()
   const loginToken = localStorage.getItem("accessToken");
-  if (loginToken === null) {
+  if (loginToken === undefined) {
     navigate("/login")
   }
 

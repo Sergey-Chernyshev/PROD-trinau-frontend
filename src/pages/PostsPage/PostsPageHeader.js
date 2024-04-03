@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useSharedData } from "../../utils/SharedDataContext";
 
 
 export default function PostsPageHeader() {
+    // const { sharedData, setSharedData } = useSharedData();
+    const [inputValue, setInputValue] = useState('');
 
-
+    const handleInputChange = (event) => {
+        setInputValue(event.target.value);
+        // setSharedData(event.target.value);
+      };
     return (
         <>
             <ul className="nav nav-pills flex-column flex-sm-row c-posts-cat-pills nav-fill mb-3 bg-black border-1" style={{ borderRadius: "6px" }} role="tablist">
@@ -39,7 +45,7 @@ export default function PostsPageHeader() {
 
             </ul>
             <div className="d-flex justify-content-center my-1">
-                <input className="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" id="search-projects-field"/>
+                <input value={inputValue} onChange={handleInputChange}  className="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" id="search-projects-field"/>
                 <Link to="/creationproject" className="ms-3 me-3 p-2 btn btn-warning text-nowrap text-center" role="button" id="add-project-button">Добавить проект</Link>
             </div>
         </>
