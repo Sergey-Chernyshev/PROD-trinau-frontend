@@ -112,10 +112,10 @@ export default function StatisticPage() {
     return (
         <>
             <div className='d-flex m-5'>Стастистика для поста: {postData.name} из канала {channelTitle}</div>
-            <div className="d-flex"></div>
-            <ResponsiveContainer width="50%" height={500}>
+            <div className="d-flex justify-content-center"></div>
+            <ResponsiveContainer width="100%" height={500}>
                 <LineChart
-                    width={250}
+                    width={500}
                     height={300}
                     data={dataViews}
                     margin={{
