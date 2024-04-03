@@ -114,7 +114,7 @@ export default function WorkflowStagesPage() {
       return;
     sendRequestWrapper(
         "DELETE",
-        `https://trinau-backend.nalinor.dev/api/projects/${p_id}/workflows/stages/${s_id}`,
+        `https://trinau-backend.nalinor.dev/api/projects/${p_id}/workflow/stages/${s_id}`,
         null,
         header,
         response => {
