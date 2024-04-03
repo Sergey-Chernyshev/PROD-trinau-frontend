@@ -38,7 +38,7 @@ function sendRequestWrapper(method, url, data, header,
 }
 
 
-export default function EditProjectPage() {
+export default function WorkflowStagesPage() {
 
   const { idproject } = useParams();
 
@@ -51,15 +51,7 @@ export default function EditProjectPage() {
   };
 
   const navigate = useNavigate();
-  const [data_users, setdata_users] = useState([])
-  const [projectData, setProjectData] = useState({})
-
-  const [inputTitleProject, setInputTitleProject] = useState('')
-  const [selectedUserOption, setSelectedUserOption] = useState();
-
-  const [allUsersForSelect, setAllUsersForSelect] = useState([])
-
-  const [endAddAllUsersForSelect, setEndAddAllUsersForSelect] = useState(true)
+  const [stages, setStages] = useState([])
 
   const loginToken = localStorage.getItem("accessToken");
   const header = "Authorization: Bearer " + loginToken
@@ -67,7 +59,7 @@ export default function EditProjectPage() {
   useEffect(() => {
     sendRequest(
         'GET',
-        'https://trinau-backend.nalinor.dev/api/users/',
+        `https://trinau-backend.nalinor.dev/api/projects/${idproject}`,
         null,
         header)
       .then(response => {
