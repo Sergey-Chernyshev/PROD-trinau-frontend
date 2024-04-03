@@ -111,18 +111,19 @@ export default function StatisticPage() {
 
     return (
         <>
-            <div className='d-flex m-5'>Стастистика для поста: {postData.name} из канала {channelTitle}</div>
-            <div className="d-flex justify-content-center"></div>
+            <h3>Стастистика для поста: {postData.name} из канала {channelTitle}</h3>
+            <div className="d-flex justify-content-center">
             <ResponsiveContainer width="100%" height={500}>
+              <p className="text-center">Просмотры</p>
                 <LineChart
                     width={500}
                     height={300}
                     data={dataViews}
                     margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
@@ -133,16 +134,18 @@ export default function StatisticPage() {
                     <Line type="monotone" dataKey="views" stroke="#00402f" />
                 </LineChart>
             </ResponsiveContainer>
-            <ResponsiveContainer width="50%" height={500}>
+            <ResponsiveContainer width="100%" height={500}>
+            <p className="text-center">Уникальные реакции</p>
+
                 <LineChart
-                    width={250}
+                    width={500}
                     height={300}
                     data={dataReactions}
                     margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
+                      top: 5,
+                      right: 30,
+                      left: 20,
+                      bottom: 5,
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
@@ -153,6 +156,7 @@ export default function StatisticPage() {
                     <Line type="monotone" dataKey="reactions" stroke="#00402f" />
                 </LineChart>
             </ResponsiveContainer>
+                    </div>
         </>
 
 

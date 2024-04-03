@@ -49,14 +49,19 @@ export default function CalendarPage(){
 
     return (
         <div>
-            Календарь
             {Object.keys(schedules).map((k, ki) => (
             <div>
             <h3>{k}</h3>
             <table className="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Запланировано</th>
+      <th className="text-center" scope="col">Название поста</th>
+                    </tr>
+                </thead>
                 <tbody>{schedules[k].map((e, i) => (<tr>
-                    <th scope="row">{dateConverter(e.schedule_time)}</th>
-                    <td>{e.name}</td>
+                    <td scope="row">{dateConverter(e.schedule_time)}</td>
+                    <td className="text-center">{e.name}</td>
                 </tr>))
                 }</tbody>
             </table>
