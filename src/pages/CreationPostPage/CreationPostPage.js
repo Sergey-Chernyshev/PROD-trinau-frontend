@@ -105,7 +105,6 @@ export default function CreationPostPage() {
   const [creationPostId,setCreationPostId] = useState()
 
 
-
   useEffect(() => {
     console.log(backDataChannels)
     const newDataProjects = backDataChannels.map(project => ({
@@ -249,6 +248,14 @@ export default function CreationPostPage() {
 
   const handleOnclickGenerate = (e) => {
     e.preventDefault();
+    if (description === '') {
+      toast("Введите запрос в поле для ввода текста", {
+        autoClose: 2500,
+        type: "error",
+        theme: "dark"
+      })
+      return;
+    }
     setGeneration(true)
     const data = {
       text: description
@@ -288,6 +295,14 @@ export default function CreationPostPage() {
 
   const handleOnclickRefactor = (e) => {
     e.preventDefault();
+    if (description === '') {
+      toast("Введите запрос в поле для ввода текста", {
+        autoClose: 2500,
+        type: "error",
+        theme: "dark"
+      })
+      return;
+    }
     setRefactoring(true)
     const data = {
       text: description
@@ -524,7 +539,7 @@ export default function CreationPostPage() {
         />
         <div className="p-2 d-flex justify-content-between">
           <button type="button" onClick={handleOnclickGenerate} className={generation ? "ai-button ai-process" : "ai-button"}><i className="bi bi-robot"></i> Сгенерировать</button>
-          <button type="button" onClick={handleOnclickRefactor} className={refactoring ? "ai-button refactor-ai-button ai-process" : "ai-button refactor-ai-button"}><i class="bi bi-pencil-square"></i> Исправить</button>
+          <button type="button" onClick={handleOnclickRefactor} className={refactoring ? "ai-button refactor-ai-button ai-process" : "ai-button refactor-ai-button"}><i className="bi bi-pencil-square"></i> Исправить</button>
         </div>
       </div>
       <div className="form-group p-2 d-flex" id="schedule-fields">

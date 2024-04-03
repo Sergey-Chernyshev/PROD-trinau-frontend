@@ -2,17 +2,17 @@ import './App.css';
 import Navbar from './components/navBar/NavBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Outlet } from 'react-router-dom';
-import { useEffect } from 'react';
-import sendRequest from './api/sendRequest';
-// import { showNotification } from './service-worker';
-
+import { Outlet, useNavigate } from 'react-router-dom';
 
 
 
 
 function App() {
-
+  const navigate = useNavigate()
+  const loginToken = localStorage.getItem("accessToken");
+  if (loginToken === null) {
+    navigate("/login")
+  }
 
 
   return (

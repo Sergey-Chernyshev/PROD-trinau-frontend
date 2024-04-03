@@ -156,7 +156,8 @@ export default function StatisticPage() {
                     <Line type="monotone" dataKey="reactions" stroke="#00402f" />
                 </LineChart>
             </ResponsiveContainer>
-                    </div>
+            
+            </div>
         </>
 
 
