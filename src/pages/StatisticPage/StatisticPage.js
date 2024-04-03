@@ -114,7 +114,7 @@ export default function StatisticPage() {
             <h3>Стастистика для поста: {postData.name} из канала {channelTitle}</h3>
             <div className="d-flex justify-content-center">
             <ResponsiveContainer width="100%" height={500}>
-              <p className="text-center">Просмотры</p>
+              <p className="text-center"></p>
                 <LineChart
                     width={500}
                     height={300}
@@ -135,7 +135,7 @@ export default function StatisticPage() {
                 </LineChart>
             </ResponsiveContainer>
             <ResponsiveContainer width="100%" height={500}>
-            <p className="text-center">Уникальные реакции</p>
+            <p className="text-center">Просмотры</p>
 
                 <LineChart
                     width={500}

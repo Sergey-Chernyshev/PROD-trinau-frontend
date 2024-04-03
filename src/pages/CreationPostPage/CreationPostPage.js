@@ -97,7 +97,7 @@ export default function CreationPostPage() {
   const [time, setTime] = useState('')
   const [generation, setGeneration] = useState('')
   const [refactoring, setRefactoring] = useState('')
-  const [videoNote, setVideoNote] = useState('')
+  const [videoNote, setVideoNote] = useState(false)
 
   const [backDataChannels, setBackDataChannels] = useState([])
   const [dataChannelsForSelect, setDataChannelsForSelect] = useState([])
@@ -172,8 +172,8 @@ export default function CreationPostPage() {
     console.log("d", data_projects)
   }, [projects]);
 
-  const toggleVideoNote = (_) => {
-    setVideoNote(!videoNote)
+  const changeVideoNote = (e) => {
+    setVideoNote(e.target.checked)
   }
 
   const handleChangeDate = (e) => {
@@ -506,7 +506,9 @@ export default function CreationPostPage() {
           <aside style={thumbsContainer}>
             {thumbs}
           </aside>
-          <button type="button" onClick={toggleVideoNote} className="btn-warning"><i className="bi bi-robot"></i> Сгенерировать</button>
+          {/* <button type="button" onClick={toggleVideoNote} className="btn-primary">Это кружочек</button> */}
+          <input className="form-check-input" type="checkbox" onChange={changeVideoNote} checked={videoNote} id="flexCheckDefault" />
+          <label className="form-check-label" htmlFor="flexCheckDefault" style={{marginLeft: 6}}>Запостить как кружочек</label>
       </div>
       <div className="form-group p-2">
         <ReactQuill 
@@ -522,8 +524,7 @@ export default function CreationPostPage() {
         />
         <div className="p-2 d-flex justify-content-between">
           <button type="button" onClick={handleOnclickGenerate} className={generation ? "ai-button ai-process" : "ai-button"}><i className="bi bi-robot"></i> Сгенерировать</button>
-          <button type="button" onClick={handleOnclickRefactor} className={refactoring ? "ai-button refactor-ai-button ai-process" : "ai-button refactor-ai-button"}><i className="bi bi-robot"></i> Исправить</button>
-          {/* className={isVariableTrue ? "ai-button refactor-ai-button dop" : "ai-button refactor-ai-button"} */}
+          <button type="button" onClick={handleOnclickRefactor} className={refactoring ? "ai-button refactor-ai-button ai-process" : "ai-button refactor-ai-button"}><i class="bi bi-pencil-square"></i> Исправить</button>
         </div>
       </div>
       <div className="form-group p-2 d-flex" id="schedule-fields">

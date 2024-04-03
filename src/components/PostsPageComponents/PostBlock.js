@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import dateConverter from '../../utils/Posts/dateConverter'
-import getFirst100Chars from '../../utils/Posts/textFormater'
 import { toast } from "react-toastify";
 import sendRequest from "../../api/sendRequest";
 export default function PostBlock(props) {
@@ -103,7 +102,6 @@ export default function PostBlock(props) {
                         data-bs-toggle="dropdown" aria-expanded="false"><i className="bi bi-list"></i>
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><Link className="dropdown-item"  >TGstat</Link></li>
                         <li>
                             <Link
                                 className="dropdown-item" onClick={handlePostPreview}
@@ -134,7 +132,7 @@ export default function PostBlock(props) {
                 </div>
             </div>
             <div className="p-2">
-                <p dangerouslySetInnerHTML={{ __html: getFirst100Chars(data.text) }}>
+                <p dangerouslySetInnerHTML={{ __html: data.text }}>
                 </p>
                 <div className="d-flex justify-content-start mb-3 align-items-center">
                 </div>

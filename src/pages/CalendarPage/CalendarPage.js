@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import sendRequest from "../../api/sendRequest";
 import {toast} from "react-toastify";
 import dateConverter from "../../utils/Posts/dateConverter";
-
+import fixCalendarDate from "../../utils/Posts/fixCalendarDate";
 function sendRequestWrapper(method, url, data, header,
                             on_success, on_error=null) {
     if (on_error === null)
@@ -51,7 +51,7 @@ export default function CalendarPage(){
         <div>
             {Object.keys(schedules).map((k, ki) => (
             <div>
-            <h3>{k}</h3>
+            <h3>{fixCalendarDate(k)}</h3>
             <table className="table">
                 <thead>
                     <tr>
