@@ -31,7 +31,7 @@ export default function ProfilePage() {
         navigate("/login")
     }
     const refreshChannels = ()  => {
-        const loginToken = localStorage.getItem("accessToken");
+        const loginToken = localStorage.getItem("accessToken"); 
         const header = {
           "Authorization": `Bearer ${loginToken}`
         };
